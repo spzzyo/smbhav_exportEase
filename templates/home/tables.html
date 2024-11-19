@@ -1,0 +1,92 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="panel-header panel-header-sm">
+    </div>
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title"> TODO: Add Country and port wise filter. Add map</h4>
+
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="text-primary">
+                    <th>
+                      <!-- Column for Carrier Logo -->
+                    </th>
+                    <th>
+                      Carrier Name
+                    </th>
+                    <th>
+                      Port of Load (POL)
+                    </th>
+                    <th>
+                      Port of Discharge (POD)
+                    </th>
+                    <th>
+                      Fastest Transit Time
+                    </th>
+                    <th>
+                      Vessel ID
+                    </th>
+                    <th class="text-right">
+                      Next Departure
+                    </th>
+                    <th class="text-right">
+                      <!-- Column for Action (Get Quote button) -->
+                    </th>
+                  </thead>
+                  <tbody>
+                    <!-- Example row -->
+                    <tr>
+                      <td>
+                        <img src="/static/assets/img/carrierLogo.png" alt="Carrier Logo" class="carrier-logo" style="width: 35px; height: auto">
+                      </td>
+                      <td>
+                        MSC  <!-- Display Carrier Name -->
+                      </td>
+                      <td>
+                        New York
+                      </td>
+                      <td>
+                        Los Angeles
+                      </td>
+                      <td>
+                        5 days
+                      </td>
+                      <td>
+                        MHC768 <!-- Display Vessel ID -->
+                      </td>
+                      <td class="text-right">
+                        2024-12-15
+                      </td>
+                      <td class="text-right">
+                        <!-- Get Quote Button with carriername and vesselID as URL parameters -->
+                        <a href="{% url 'chat-page' %}" class="btn btn-warning">Get Quote</a>
+                      </td>
+                    </tr>
+                    <!-- Repeat this row for more data -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

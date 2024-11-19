@@ -1,0 +1,185 @@
+
+
+
+{% extends "layouts/base.html" %}
+
+{% block title %} Login {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="panel-header panel-header-sm">
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Login</h5>
+                    <span>
+                        Add your credentials
+                    </span>                    
+                </div>
+
+                <br />
+                <div class="card-body">
+                    <!-- <form method="post">
+                        {% csrf_token %}
+                        <div class="branding">Chit-Chat</div>
+                        {{form.as_p}}
+                        <div class="btn-container">
+                            <button type="submit">Login</button>
+                        </div>
+                    </form> -->
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <!-- Username Label and Input -->
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label for="{{ form.username.id_for_label }}">Username</label>
+                                </div>
+                            </div>
+                    
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.username }}  <!-- This will render the 'username' field -->
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="row">
+                            <!-- Password Label and Input -->
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label for="{{ form.password.id_for_label }}">Password</label>
+                                </div>
+                            </div>
+                    
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.password }}  <!-- This will render the 'password' field -->
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        
+                        <div class="row">
+
+                            <div class="col-md-2 pr-1"></div>
+                            <div class="col-md-5 pr-1">
+                                <button type="submit" class="btn btn-fill btn-primary">Log in</button>
+                                &nbsp;&nbsp; or &nbsp; <a href="" >Register</a>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        form {
+            max-width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* text-align: center; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .branding {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #128C7E;
+            /* ChitChat brand color */
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        button {
+            background-color: #128C7E;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #075e54;
+        }
+
+        label {
+            font-weight: bold;
+            text-align: left;
+            width: 85%;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div class="branding">Chit-Chat</div>
+        {{form.as_p}}
+        <div class="btn-container">
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</body>
+
+</html> -->
