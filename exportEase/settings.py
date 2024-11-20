@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-'daphne',
+    'daphne',
     'django.contrib.staticfiles',
     'channels',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -144,5 +145,11 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_REDIRECT_URL = "shipping-comparison"
-LOGOUT_REDIRECT_URL = "login-user"
+LOGIN_URL = "user:login"
+LOGIN_REDIRECT_URL = "dashboard"
+LOGOUT_REDIRECT_URL = "user:login"
+
+AUTH_USER_MODEL = "user.CustomUser"
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+SESSION_COOKIE_AGE = 1209600  # Two weeks
