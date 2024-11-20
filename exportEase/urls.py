@@ -22,4 +22,5 @@ urlpatterns = [
     path("", include("user.urls")),
     path("chat/", include("ChitChat.urls")),
     path("category/", include("category.urls")),
+    path("notifications/", include("notification.urls")),
 ]

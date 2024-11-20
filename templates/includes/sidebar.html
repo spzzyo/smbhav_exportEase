@@ -54,6 +54,18 @@
             <p>Shipping Carriers</p>
           </a>
         </li>
+        <li class="{% if 'notifications' in segment %} active {% endif %}">
+          <a href="/notifications/">
+              <i class="now-ui-icons ui-1_bell-53"></i>
+              <p>Notifications <span id="notification-count" class="badge badge-danger"></span></p>
+          </a>
+      </li>
+      <li class="{% if 'send_notification' in segment %} active {% endif %}">
+        <a href="{% url 'send_notification' %}">
+            <i class="now-ui-icons ui-1_bell-53"></i>
+            <p>Send Notification</p>
+        </a>
+      </li>      
         <!-- <li class="{% if 'typography' in segment %} active {% endif %}">
           <a href="/typography.html">
             <i class="now-ui-icons text_caps-small"></i>

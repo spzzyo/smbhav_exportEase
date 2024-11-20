@@ -49,4 +49,17 @@
   {% block javascripts %}{% endblock javascripts %}
 
 </body>
+
+<script>
+  const notificationCount = document.getElementById("notification-count");
+
+  const socket = new WebSocket("ws://" + window.location.host + "/ws/notifications/");
+
+  socket.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      notificationCount.textContent = parseInt(notificationCount.textContent || 0) + 1;
+      alert(data.message);  // Show a popup for the new notification
+  };
+</script>
+
 </html>
