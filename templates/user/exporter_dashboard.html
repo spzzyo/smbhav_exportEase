@@ -1,3 +1,8 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
 <h1>Welcome {{ request.user.username }}</h1>
 
 <a href="{% url 'category:category' %}">Export Now</a>
+
+{% endblock content %}

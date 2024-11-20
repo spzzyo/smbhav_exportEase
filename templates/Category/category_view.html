@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Choose Category</h1>
+<ul>
+    <li><a href="{% url 'category:category-detail' 1 %}">Fruits</a></li>
+    <li><a href="{% url 'category:category-detail' 2 %}">Furniture</a></li>
+    <li><a href="{% url 'category:category-detail' 3 %}">Electronics</a></li>
+    <li><a href="{% url 'category:category-detail' 4 %}">Clothes</a></li>
+</ul>
+
+{% endblock content %}
