@@ -1,18 +1,46 @@
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import redirect, render
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from .forms import CustomUserCreationForm
 
+# views.py
 class CustomLoginView(LoginView):
-    template_name = "chat/loginPage.html"  # Specify your login template
-    authentication_form = AuthenticationForm
+    template_name = "user/login.html"
 
-    def form_valid(self, form):
-        user = form.get_user()
-        # Redirect based on user_type
-        if user.user_type == 1:  # Admin
-            return redirect("chat-page")
-        elif user.user_type == 2:  # Exporter
-            return redirect("shipping-comparison")
-        elif user.user_type == 3:  # Shipper
-            return redirect("chat-page")
-        return super().form_valid(form)
+    def get_success_url(self):
+        user = self.request.user
+        if user.user_type == 1:
+            return reverse("user:admin-dashboard")
+        elif user.user_type == 2:
+            return reverse("user:exporter-dashboard")
+        elif user.user_type == 3:
+            return reverse("user:shipper-dashboard")
+        return super().get_success_url()
+
+
+class CustomLogoutView(LogoutView):
+    template_name = "user/logout.html"
+
+def register(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("user:login")
+    else:
+        form = CustomUserCreationForm()
+    return render(request, "user/register.html", {"form": form})
+
+@login_required
+def admin_dashboard(request):
+    return render(request, "user/admin_dashboard.html")
+
+@login_required
+def exporter_dashboard(request):
+    return render(request, "user/exporter_dashboard.html")
+
+@login_required
+def shipper_dashboard(request):
+    return render(request, "user/shipper_dashboard.html")
+
