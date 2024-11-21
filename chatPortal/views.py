@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from openai import OpenAI
 from django.conf import settings
 from .models import Messages
 import os
 import requests
+
+
 
 def chatPage(request, *args, **kwargs):
     if not request.user.is_authenticated:
@@ -70,7 +71,7 @@ def get_messages_and_summarize():
 
   
     try:
-        api_key = "AIzaSyCCU15y823R9x-yEtToX8nEHMGDEQES6xI"  
+        api_key = settings.API_KEY  
         url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
 
         
