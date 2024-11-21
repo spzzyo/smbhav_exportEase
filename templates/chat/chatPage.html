@@ -8,18 +8,15 @@
     
 
         .chat-container {
-            max-width: 400px;
+            max-width: 500px;
            
             padding: 10px;
         }
 
         .chat-header {
             text-align: center;
-            background-color: #061a6a;
-            color: #fff;
             padding: 10px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+          
         }
 
         .chat-header h1 {
@@ -127,18 +124,33 @@
 {% block content %}
 <div class="panel-header panel-header-sm">
 </div>
+<div class="info-header" style="display: flex; justify-content: space-between; align-items: flex-start; padding: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px;">
+    <!-- Left Section: Carrier Info -->
+    <div style="text-align: left;">
+        <h2 style="margin: 0; font-size: 1.5em; font-weight: bold;">{{ carrier_name }}</h2>
+        <p style="margin: 5px 0; font-size: 1em;">
+            <strong>From:</strong> {{ pol }} <br>
+            <strong>To:</strong> {{ pod }} <br>
+            <strong>Vessel ID:</strong> {{ vessel_id }} <br>
+            <strong>Departure Date:</strong> {{ departure_date }}
+        </p>
+    </div>
+
+    <!-- Right Section: Summarizer -->
+    <div style="text-align: left; max-width: 300px; margin-right: 50%;">
+        <h3 style="margin: 0 0 10px 0; font-size: 1.2em; font-weight: bold;">Summarizer: Todo - dynamically update just the summary</h3>
+        
+        <p class="min-width: 40%">
+            {{summary}}
+        </p>
+    </div>
+</div>
+
 <div class="chat-container">
-    <div class="chat-header">
-        <h1>Chit-Chat <i class="fas fa-comment"></i></h1>
-    </div>
-    <div class="chat-logout">
-        {% if request.user.is_authenticated %}
-        <div style="float: left;font-weight: bold; color: #036358;">{{ carriername }} </div>
-        <div style="float: right;"><a href="{% url 'logout-user' %}"><i class="fas fa-sign-out-alt"></i></a>
-        </div>
-        <div style="clear: both;"></div>
-        {% endif %}
-    </div>
+
+        
+  
+
     <div class="chat__item__container" id="id_chat_item_container">
         <!-- Messages will be displayed here with a scrollbar -->
     </div>
@@ -151,7 +163,15 @@
 {% endblock content %}
 {% block javascripts %}
 <script>
-    const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+    const urlParams = new URLSearchParams(window.location.search);
+
+    
+    const username = urlParams.get('username');
+    const carrierName = urlParams.get('carrier_name');
+
+    const chatSocket = new WebSocket(
+        "ws://" + window.location.host + "/ws/chat/?username=" + username + "&carrier_name=" + carrierName
+    );
     chatSocket.onopen = function (e) {
         console.log("The connection was set up successfully!");
     };
