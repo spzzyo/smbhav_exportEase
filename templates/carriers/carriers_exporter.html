@@ -44,7 +44,7 @@
         
         <div id="WaterWays" class="w3-container city" style="display:none">
           <h2>WaterWays</h2>
-          <p>WaterWays is the capital city of England.</p>
+        
 
          
           <div class="card-body ">
@@ -56,9 +56,7 @@
         
         <div id="AirWays" class="w3-container city" style="display:none">
           <h2>AirWays</h2>
-          <p>AirWays is the capital of France.</p> 
-
-        
+                
         <div class="card-body ">
           <div id="mapa" class="map"></div>
         </div>
@@ -67,7 +65,7 @@
         
         <div id="RoadWays" class="w3-container city" style="display:none">
           <h2>RoadWays</h2>
-          <p>RoadWays is the capital of Japan.</p>
+         
         </div>
       </div>
       </div>
@@ -136,7 +134,9 @@
                       </td>
                       <td class="text-right">
                         <!-- Get Quote Button with carriername and vesselID as URL parameters -->
-                        <a href="{% url 'chat-page'  %}" class="btn btn-warning">Get Quote</a>
+                        <a href="{% url 'chat-page' %}?username={{ request.user.username }}&carrier_name=MSC&pol=New%20York&pod=Los%20Angeles&transit_time=5%20days&vessel_id=MHC768&departure_date=2024-12-15"  class="btn btn-warning">Get Quote</a>
+
+                   
                       </td>
                     </tr>
                     <!-- Repeat this row for more data -->
