@@ -1,20 +1,19 @@
-<<<<<<< HEAD
-=======
+
 from channels.routing import ProtocolTypeRouter, URLRouter
 from chatPortal import routing
 from channels.auth import AuthMiddlewareStack
->>>>>>> main
+
 import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from ChitChat import routing as chitchat_routing  # Existing routing from ChitChat
+from chatPortal import routing as chatPortal_routing  # Existing routing from ChitChat
 from notification.routing import websocket_urlpatterns as notification_routing  # Import notification routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'exportEase.settings')
 
 # Combine WebSocket routing from multiple apps
-combined_websocket_urlpatterns = chitchat_routing.websocket_urlpatterns + notification_routing
+combined_websocket_urlpatterns = chatPortal_routing.websocket_urlpatterns + notification_routing
 
 application = ProtocolTypeRouter(
     {
