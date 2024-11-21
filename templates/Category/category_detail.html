@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Category: {{ category_name }}</h1>
+<p>Upload Documents for your <strong>{{ category_name }}</strong> business</p>
+
+<form action="{% url 'category:upload-documents' category_id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <p><strong>Required Documents:</strong></p>
+        <ul>
+            {% for doc in required_documents %}
+                <li>
+                    {{ doc }} 
+                    <input type="file" name="document_{{ forloop.counter }}" accept=".pdf,.doc,.docx,.jpg,.png" required>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <label for="additional_documents">Drop any additional documents:</label>
+        <input type="file" id="additional_documents" name="additional_documents" multiple accept=".pdf,.doc,.docx,.jpg,.png">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit Documents</button>
+</form>
+
+{% endblock content %}
