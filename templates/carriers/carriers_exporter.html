@@ -1,0 +1,284 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+  .shipping-type {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    max-width: 60%;
+  }
+
+  #mapw, #mapa {
+    height: 400px; /* The height is 400 pixels */
+    width: 100%; /* The width is the width of the web page */
+}
+
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="panel-header panel-header-sm">
+    </div>
+    <div class="content">
+      <div class="shipping-type">
+      <div class="w3-container">
+        <h2>Tabs in a Grid</h2>
+        
+        <div class="w3-row">
+          <a href="javascript:void(0)" onclick="openCity(event, 'WaterWays');">
+            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">WaterWays</div>
+          </a>
+          <a href="javascript:void(0)" onclick="openCity(event, 'AirWays');">
+            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">AirWays</div>
+          </a>
+          <a href="javascript:void(0)" onclick="openCity(event, 'RoadWays');">
+            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">RoadWays</div>
+          </a>
+        </div>
+        
+        <div id="WaterWays" class="w3-container city" style="display:none">
+          <h2>WaterWays</h2>
+        
+
+         
+          <div class="card-body ">
+            <div id="mapw" class="map"></div>
+          </div>
+          
+                    
+        </div>
+        
+        <div id="AirWays" class="w3-container city" style="display:none">
+          <h2>AirWays</h2>
+                
+        <div class="card-body ">
+          <div id="mapa" class="map"></div>
+        </div>
+        
+        </div>
+        
+        <div id="RoadWays" class="w3-container city" style="display:none">
+          <h2>RoadWays</h2>
+         
+        </div>
+      </div>
+      </div>
+      
+      
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title"> TODO: Add Country and port wise filter. Add map</h4>
+
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="text-primary">
+                    <th>
+                      <!-- Column for Carrier Logo -->
+                    </th>
+                    <th>
+                      Carrier Name
+                    </th>
+                    <th>
+                      Port of Load (POL)
+                    </th>
+                    <th>
+                      Port of Discharge (POD)
+                    </th>
+                    <th>
+                      Fastest Transit Time
+                    </th>
+                    <th>
+                      Vessel ID
+                    </th>
+                    <th class="text-right">
+                      Next Departure
+                    </th>
+                    <th class="text-right">
+                      <!-- Column for Action (Get Quote button) -->
+                    </th>
+                  </thead>
+                  <tbody>
+                    <!-- Example row -->
+                    <tr>
+                      <td>
+                        <img src="/static/assets/img/carrierLogo.png" alt="Carrier Logo" class="carrier-logo" style="width: 35px; height: auto">
+                      </td>
+                      <td>
+                        MSC  <!-- Display Carrier Name -->
+                      </td>
+                      <td>
+                        New York
+                      </td>
+                      <td>
+                        Los Angeles
+                      </td>
+                      <td>
+                        5 days
+                      </td>
+                      <td>
+                        MHC768 <!-- Display Vessel ID -->
+                      </td>
+                      <td class="text-right">
+                        2024-12-15
+                      </td>
+                      <td class="text-right">
+                        <!-- Get Quote Button with carriername and vesselID as URL parameters -->
+                        <a href="{% url 'chat-page' %}?username={{ request.user.username }}&carrier_name=MSC&pol=New%20York&pod=Los%20Angeles&transit_time=5%20days&vessel_id=MHC768&departure_date=2024-12-15"  class="btn btn-warning">Get Quote</a>
+
+                   
+                      </td>
+                    </tr>
+                    <!-- Repeat this row for more data -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+  
+
+    </div>
+
+
+
+    
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+
+<script>
+  function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.firstElementChild.className += " w3-border-red";
+
+    // Initialize map when the tab is visible
+    if (cityName === "WaterWays" && typeof window.initMapWaterWays === "function") {
+      initMapWaterWays(); // Initialize WaterWays map
+    } else if (cityName === "AirWays" && typeof window.initMapAirWays === "function") {
+      initMapAirWays(); // Initialize AirWays map
+    }
+  }
+
+  // WaterWays map initialization
+  function initMapWaterWays() {
+    var indiaCenter = { lat: 20.5937, lng: 78.9629 };
+
+    var mapw = new google.maps.Map(document.getElementById('mapw'), {
+      zoom: 5, 
+      center: indiaCenter
+    });
+
+    var ports = [
+          { name: "Mumbai Port", lat: 18.9750, lng: 72.8258 },
+          { name: "Chennai Port", lat: 13.0827, lng: 80.2707 },
+          { name: "Kolkata Port", lat: 22.5726, lng: 88.3639 },
+          { name: "Cochin Port", lat: 9.9312, lng: 76.2673 },
+          { name: "Visakhapatnam Port", lat: 17.6868, lng: 83.2185 },
+          { name: "Mangalore Port", lat: 12.9141, lng: 74.8560 },
+          { name: "Goa Port", lat: 15.2993, lng: 74.1240 },
+          { name: "Tuticorin Port", lat: 8.7642, lng: 78.1290 },
+          { name: "Haldia Port", lat: 22.0663, lng: 88.1046 },
+          { name: "Jawaharlal Nehru Port", lat: 18.9812, lng: 72.8997 },
+          { name: "Kochi Port", lat: 9.9312, lng: 76.2673 },
+          { name: "Port Blair", lat: 11.6234, lng: 92.7465 },
+          { name: "Paradip Port", lat: 20.2652, lng: 86.6043 },
+          { name: "Sikka Port", lat: 22.7234, lng: 69.4413 }
+      ];
+
+    var infoWindow = new google.maps.InfoWindow();
+
+    ports.forEach(function(port) {
+      var marker = new google.maps.Marker({
+        position: { lat: port.lat, lng: port.lng },
+        map: mapw,
+        title: port.name
+      });
+
+      marker.addListener('mouseover', function() {
+        infoWindow.setContent(port.name); 
+        infoWindow.open(mapw, marker); 
+      });
+
+      marker.addListener('mouseout', function() {
+        infoWindow.close(); 
+      });
+    });
+  }
+
+  // AirWays map initialization
+  function initMapAirWays() {
+    var indiaCenter = { lat: 20.5937, lng: 78.9629 };
+
+    var mapa = new google.maps.Map(document.getElementById('mapa'), {
+      zoom: 5, 
+      center: indiaCenter
+    });
+
+    var airports = [
+                { name: "Indira Gandhi International Airport", lat: 28.5575, lng: 77.1482 },
+                { name: "Chhatrapati Shivaji Maharaj International Airport", lat: 19.0886, lng: 72.8656 },
+                { name: "Kempegowda International Airport", lat: 13.1976, lng: 77.7050 },
+                { name: "Netaji Subhash Chandra Bose International Airport", lat: 22.6547, lng: 88.4467 },
+                { name: "Rajiv Gandhi International Airport", lat: 17.2319, lng: 78.4299 },
+                { name: "Chennai International Airport", lat: 13.0827, lng: 80.2707 },
+                { name: "Cochin International Airport", lat: 9.9312, lng: 76.2673 },
+                { name: "Sardar Vallabhbhai Patel International Airport", lat: 23.0379, lng: 72.6349 },
+                { name: "Pune International Airport", lat: 18.5812, lng: 73.9195 }
+              ];
+
+    var infoWindow = new google.maps.InfoWindow();
+
+    airports.forEach(function(port) {
+      var marker = new google.maps.Marker({
+        position: { lat: port.lat, lng: port.lng },
+        map: mapa,
+        title: port.name
+      });
+
+      marker.addListener('mouseover', function() {
+        infoWindow.setContent(port.name); 
+        infoWindow.open(mapa, marker); 
+      });
+
+      marker.addListener('mouseout', function() {
+        infoWindow.close(); 
+      });
+    });
+  }
+</script>
+<script async defer 
+src= 
+"https://maps.googleapis.com/maps/api/js?key= 
+AIzaSyB2bXKNDezDf6YNVc-SauobynNHPo4RJb8&callback=initMap"> 
+</script> 
+
+
+{% endblock javascripts %}

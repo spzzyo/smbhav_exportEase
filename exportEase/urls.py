@@ -20,7 +20,12 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin_page"),
     path("", include("user.urls")),
+<<<<<<< HEAD
     path("chat/", include("ChitChat.urls")),
     path("category/", include("category.urls")),
     path("notifications/", include("notification.urls")),
 ]
+=======
+    path("", include("chatPortal.urls")),
+]
+>>>>>>> main

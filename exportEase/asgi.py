@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+from channels.routing import ProtocolTypeRouter, URLRouter
+from chatPortal import routing
+from channels.auth import AuthMiddlewareStack
+>>>>>>> main
 import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
