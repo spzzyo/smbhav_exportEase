@@ -126,8 +126,8 @@ def make_protected_call(request):
     if request.method == "POST":
         try:
             # Twilio credentials
-            account_sid = "AC53ccbc7b90c6e3e019895efadc19e6d3"
-            auth_token = "6c62feb76465fe2ae69713867dfaa2e9"
+            account_sid = os.getenv('T_ACC_ID')
+            auth_token = os.getenv('T_AUTH_TOKEN')
             client = Client(account_sid, auth_token)
 
             # Create the call
