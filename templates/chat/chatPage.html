@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-
+{% csrf_token %}
 {% block title %} Tables {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
@@ -124,6 +124,7 @@
 {% block content %}
 <div class="panel-header panel-header-sm">
 </div>
+
 <div class="info-header" style="display: flex; justify-content: space-between; align-items: flex-start; padding: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px;">
     <!-- Left Section: Carrier Info -->
     <div style="text-align: left;">
@@ -136,20 +137,42 @@
         </p>
     </div>
 
+    
     <!-- Right Section: Summarizer -->
     <div style="text-align: left; max-width: 300px; margin-right: 50%;">
-        <h3 style="margin: 0 0 10px 0; font-size: 1.2em; font-weight: bold;">Summarizer: Todo - dynamically update just the summary</h3>
+        <h3 style="margin: 0 0 10px 0; font-size: 1.2em; font-weight: bold;">
+            Summarizer:
+        </h3>
         
-        <p class="min-width: 40%">
-            {{summary}}
-        </p>
+        <p id="summary-text" style="display: none; min-width: 40%;">{{ summary }}</p>
+
+        <div id="loader" style="display: none; margin-top: 10px;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i> Loading...
+        </div>
+    
+        <button id="summary-button" style="
+            display: flex; 
+            margin-top: 10px;
+            align-items: center; 
+            justify-content: center; 
+            background-color: #061a6a; 
+            color: #fff; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            cursor: pointer;">
+            <i class="fas fa-book" style="margin-right: 10px;"></i> Load Summary
+        </button>
     </div>
 </div>
 
 <div class="chat-container">
 
         
-  
+    <div class="chat-header">
+        <h1>Talk to your Shipper</h1>
+    </div>
 
     <div class="chat__item__container" id="id_chat_item_container">
         <!-- Messages will be displayed here with a scrollbar -->
@@ -158,6 +181,22 @@
         <input type="text" id="id_message_send_input" placeholder="Type your message..." />
         <button type="submit" id="id_message_send_button"><i class="fas fa-paper-plane"></i> Send</button>
     </div>
+
+    <button id="protected-call-button" style="
+    display: flex; 
+    margin: 20px;
+    align-items: center; 
+    justify-content: center; 
+    background-color: #061a6a; 
+    color: #fff; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer;
+">
+    <i class="fas fa-phone" style="margin-right: 10px; "></i> Get on a Protected Call
+</button>
 </div>
 
 {% endblock content %}
@@ -210,6 +249,48 @@
         messageContainer.scrollTop = messageContainer.scrollHeight;
     };
 </script>
+
+<script>
+    document.querySelector("#protected-call-button").addEventListener("click", function() {
+        fetch("{% url 'make_protected_call' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json"
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("Call initiated successfully! Call SID: " + data.call_sid);
+            } else {
+                alert("Error initiating call: " + data.message);
+            }
+        })
+        .catch(error => console.error("Error making call:", error));
+    });
+</script>
+
+<script>
+    document.querySelector("#summary-button").addEventListener("click", function () {
+        const summaryText = document.querySelector("#summary-text");
+        const button = document.querySelector("#summary-button");
+        const loader = document.querySelector("#loader");
+
+       
+        loader.style.display = "block"; 
+        button.style.display = "none"; 
+
+        setTimeout(function () {
+            if (summaryText.style.display === "none") {
+                summaryText.style.display = "block"; 
+                button.innerHTML = '<i class="fas fa-book" style="margin-right: 10px;"></i> Hide Summary'; 
+            }
+
+            loader.style.display = "none";
+            button.style.display = "flex"; 
+        }, 1500); 
+    });
+</script>
+
 {% endblock javascripts %}
-
-
