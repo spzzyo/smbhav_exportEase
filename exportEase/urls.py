@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("ChitChat.urls")),
+    path('admin/', admin.site.urls, name="admin_page"),
+    path("", include("user.urls")),
+    path("", include("chatPortal.urls")),
+    path("", include("category.urls")),
+    path("notifications/",include("notification.urls")),
 ]
