@@ -125,19 +125,7 @@ def get_messages_and_summarize():
 def make_protected_call(request):
     if request.method == "POST":
         try:
-            # Twilio credentials
-            account_sid = os.getenv('T_ACC_ID')
-            auth_token = os.getenv('T_AUTH_TOKEN')
-            client = Client(account_sid, auth_token)
-
-            # Create the call
-            call = client.calls.create(
-                method="GET",
-                status_callback_method="POST",
-                url="http://demo.twilio.com/docs/voice.xml",
-                to="+919833914068", 
-                from_="+12406604030",
-            )
+            
 
             # Respond with success and call SID
             return JsonResponse({"status": "success", "call_sid": call.sid})
