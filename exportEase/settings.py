@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'channels',
     "notification",
     'user',
-    'chatPortal'
+    'chatPortal',
+    'doc_manager',
 ]
 
 MIDDLEWARE = [
