@@ -1,1 +1,32 @@
-<h1>Admin</h1>
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Exporter</th>
+            <th>Document</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for req in pending_requests %}
+        <tr>
+            <td>{{ req.shipper.username }}</td>
+            <td>{{ req.document.title }}</td>
+            <td>{{ req.status }}</td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ req.id }}">
+                    <button name="action" value="verify">Verify Forgery</button>
+                    <button name="action" value="approve">Approve</button>
+                    <button name="action" value="reject">Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<h1>Actor Dashboard</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Document Title</th>
+                <th>Exporter Name</th>
+                <th>Category</th>
+                <th>Request Access</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in documents %}
+            <tr>
+                <td>{{ document.title }}</td>
+                <td>{{ document.exporter.username }}</td>
+                <!-- <td>{{ document.category }}</td> -->
+                <td>
+                    <form action="{% url 'request_document_access' document.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Request Access</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

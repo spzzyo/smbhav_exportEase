@@ -16,6 +16,8 @@ class CustomLoginView(LoginView):
             return reverse("user:exporter-dashboard")
         elif user.user_type == 3:
             return reverse("user:shipper-dashboard")
+        elif user.user_type == 4:
+            return reverse("user:actor-dashboard")
         return super().get_success_url()
 
 
@@ -43,4 +45,8 @@ def exporter_dashboard(request):
 @login_required
 def shipper_dashboard(request):
     return render(request, "user/shipper_dashboard.html")
+
+@login_required
+def actor_dashboard(request):
+    return render(request, "user/actor_dashboard.html")
 

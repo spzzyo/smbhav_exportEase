@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
         (1, "Admin"),
         (2, "Exporter"),
         (3, "Shipper"),
+        (4, "Actor"),
     )
 
     user_type = models.PositiveSmallIntegerField(

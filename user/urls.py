@@ -1,5 +1,6 @@
 from django.urls import path, include
 from .views import *
+from doc_manager.views import actor_Dashboard_with_all_docs
 
 app_name = "user"
 
@@ -10,4 +11,5 @@ urlpatterns = [
     path("admin-dashboard/", admin_dashboard, name="admin-dashboard"),
     path("exporter-dashboard/", exporter_dashboard, name="exporter-dashboard"),
     path("shipper-dashboard/", shipper_dashboard, name="shipper-dashboard"),
+    path("actor-dashboard/", actor_Dashboard_with_all_docs, name="actor-dashboard"),
 ]

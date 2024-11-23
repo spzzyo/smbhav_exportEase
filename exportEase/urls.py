@@ -22,5 +22,7 @@ urlpatterns = [
     path("", include("user.urls")),
     path("", include("chatPortal.urls")),
     path("", include("category.urls")),
+    path("", include('doc_manager.urls')),
+    path("", include('mlModel.urls')),
     path("notifications/",include("notification.urls")),
 ]

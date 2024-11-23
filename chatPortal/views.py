@@ -116,21 +116,3 @@ def get_messages_and_summarize():
 
   
     return summary
-
-
-
-
-
-
-def make_protected_call(request):
-    if request.method == "POST":
-        try:
-            
-
-            # Respond with success and call SID
-            return JsonResponse({"status": "success", "call_sid": call.sid})
-
-        except Exception as e:
-            return JsonResponse({"status": "error", "message": str(e)})
-
-    return JsonResponse({"status": "error", "message": "Invalid request method"})
