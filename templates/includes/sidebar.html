@@ -1,83 +1,114 @@
 <div class="sidebar" data-color="yellow">
-  <!-- Sidebar Content -->
-  <div class="logo">
-      <!-- Logo Content -->
+    <!-- Sidebar Content -->
+    <div class="logo">
+        <!-- Logo Content -->
+    </div>
+    <div class="sidebar-wrapper" id="sidebar-wrapper">
+        <ul class="nav">
+            {% if request.user.is_authenticated %}
+                <!-- Dashboard Link -->
+                <li class="{% if 'dashboard' in segment %} active {% endif %}">
+                    <a href="">
+                        <i class="now-ui-icons design_app"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                
+                <!-- Item Details Link -->
+                <li class="{% if 'item-details' in segment %} active {% endif %}">
+                    <a href="{% url 'predict_view' %}">
+                        <i class="now-ui-icons business_bulb-63"></i>
+                        <p>Item Details</p>
+                      </a>
+                  </li>
+                  
+                  <li class="{% if 'packing' in segment %} active {% endif %}">
+                      <a href="{% url 'packing' %}">
+                          <i class="now-ui-icons ui-1_bell-53"></i>
+                          <p>Packaging Recommendations</p>
+                      </a>
+                  </li>
+  
+                  <!-- Shipping Carriers Link -->
+                  <li class="{% if 'shipping-carriers' in segment %} active {% endif %}">
+                      <a href="{% url 'shipping-comparison' %}">
+                          <i class="now-ui-icons design_bullet-list-67"></i>
+                          <p>Shipping Carriers</p>
+                      </a>
+                </li>
+  
+                <!-- Logistics & Warehouses Link -->
+                <li class="{% if 'logistics-warehouses' in segment %} active {% endif %}">
+                    <a href="{% url 'logistics' %}">
+                        <i class="now-ui-icons location_pin"></i>
+                        <p>Logistics & Warehouses</p>
+                    </a>
+                </li>
+  
+                <!-- Shipment Tracking Link -->
+                <li class="{% if 'shipment-tracking' in segment %} active {% endif %}">
+                    <a href="{% url 'shiptrack' %}">
+                        <i class="now-ui-icons location_world"></i>
+                        <p>Shipment Tracking</p>
+                    </a>
+                </li>
+  
+                <!-- Notifications Link -->
+                <li class="{% if 'notifications' in segment %} active {% endif %}">
+                    <a href="{% url 'notification-list' %}">
+                        <i class="now-ui-icons ui-1_bell-53"></i>
+                        <p>Notifications <span id="notification-count" class="badge badge-danger"></span></p>
+                    </a>
+                </li>
+  
+                <!-- Raise Query Link -->
+                <li class="{% if 'raise-query' in segment %} active {% endif %}">
+                    <a href="{% url 'send_notification' %}">
+                        <i class="now-ui-icons ui-1_email-85"></i>
+                        <p>Raise Query</p>
+                    </a>
+                </li>
+  
+                <li class="{% if 'raise-query' in segment %} active {% endif %}">
+                  <a href="{% url 'calculate_import' %}">
+                      <i class="now-ui-icons business_chart-pie-36
+
+                      "></i>
+                      <p>Tax Breakdown</p>
+                  </a>
+              </li>
+  
+            {% else %}
+                <li class="">
+                    <a href="#">
+                        <i class="now-ui-icons media-1_button-power"></i>
+                        <p>Login First</p>
+                    </a>
+                </li>      
+            {% endif %}
+        </ul>
+    </div>
   </div>
-  <div class="sidebar-wrapper" id="sidebar-wrapper">
-      <ul class="nav">
-          {% if request.user.is_authenticated %}
-              <!-- Dashboard Link -->
-              <li class="{% if 'dashboard' in segment %} active {% endif %}">
-                  <a href="">
-                      <i class="now-ui-icons design_app"></i>
-                      <p>Dashboard</p>
-                  </a>
-              </li>
-
-              <!-- Item Details Link -->
-              <li class="{% if 'item-details' in segment %} active {% endif %}">
-                  <a href="{% url 'predict_view' %}">
-                      <i class="now-ui-icons business_bulb-63"></i>
-                      <p>Item Details</p>
-                  </a>
-              </li>
-
-              <!-- Shipping Carriers Link -->
-              <li class="{% if 'shipping-carriers' in segment %} active {% endif %}">
-                  <a href="{% url 'shipping-comparison' %}">
-                      <i class="now-ui-icons design_bullet-list-67"></i>
-                      <p>Shipping Carriers</p>
-                  </a>
-              </li>
-
-              <!-- Logistics & Warehouses Link -->
-              <li class="{% if 'logistics-warehouses' in segment %} active {% endif %}">
-                  <a href="{% url 'logistics' %}">
-                      <i class="now-ui-icons location_pin"></i>
-                      <p>Logistics & Warehouses</p>
-                  </a>
-              </li>
-
-              <!-- Shipment Tracking Link -->
-              <li class="{% if 'shipment-tracking' in segment %} active {% endif %}">
-                  <a href="{% url 'shiptrack' %}">
-                      <i class="now-ui-icons location_world"></i>
-                      <p>Shipment Tracking</p>
-                  </a>
-              </li>
-
-              <!-- Notifications Link -->
-              <li class="{% if 'notifications' in segment %} active {% endif %}">
-                  <a href="{% url 'notification-list' %}">
-                      <i class="now-ui-icons ui-1_bell-53"></i>
-                      <p>Notifications <span id="notification-count" class="badge badge-danger"></span></p>
-                  </a>
-              </li>
-
-              <!-- Raise Query Link -->
-              <li class="{% if 'raise-query' in segment %} active {% endif %}">
-                  <a href="{% url 'send_notification' %}">
-                      <i class="now-ui-icons ui-1_email-85"></i>
-                      <p>Raise Query</p>
-                  </a>
-              </li>
-
-              <!-- Packaging Recommendations Link -->
-              <li class="{% if 'packing' in segment %} active {% endif %}">
-                  <a href="{% url 'packing' %}">
-                      <i class="now-ui-icons ui-1_bell-53"></i>
-                      <p>Packaging Recommendations</p>
-                  </a>
-              </li>
-
-          {% else %}
-              <li class="">
-                  <a href="#">
-                      <i class="now-ui-icons media-1_button-power"></i>
-                      <p>Login First</p>
-                  </a>
-              </li>      
-          {% endif %}
-      </ul>
-  </div>
-</div>
+  
+  <!-- Custom CSS for White Text, Slightly Bigger and Bolder -->
+  <style>
+    .sidebar {
+        background: linear-gradient(135deg, #ffdd00, #ff7f00); /* Yellow to Orange Gradient */
+        color: black; /* Text color */
+    }
+  
+    .sidebar .nav li a {
+        font-size: 0.7rem; /* Slightly larger font */
+        font-weight: 600; /* Slightly bolder */
+        color: white; /* White text */
+    }
+  
+    .sidebar .nav li a:hover {
+        color: #ccc; /* Slightly lighter text color on hover */
+    }
+  
+    .sidebar .nav li.active a {
+        font-weight: 700; /* Bold text for active links */
+    }
+  </style>
+  

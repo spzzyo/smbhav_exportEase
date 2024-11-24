@@ -7,14 +7,65 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from twilio.rest import Client
 from django.http import JsonResponse
+import matplotlib.pyplot as plt
+
+# Directory for saving the chart
+CHART_DIR = "static/charts"
+
+
+def calculate_import_charges_view(request):
+    if request.method == "POST":
+        # Gather input from the form
+        product_value = float(request.POST.get("product_value", 0))
+        shipping_cost = float(request.POST.get("shipping_cost", 0))
+        insurance_cost = float(request.POST.get("insurance_cost", 0))
+
+        # Specific rates for furniture imports from Germany to India
+        import_duty_rate = 25.0  # Example: Furniture typically has 25% import duty
+        IGST_rate = 18.0  # Integrated GST for furniture is 18% in India
+
+        # Perform calculations
+        import_duty = (product_value * import_duty_rate) / 100
+        taxable_base = product_value + shipping_cost + insurance_cost + import_duty
+        IGST = (taxable_base * IGST_rate) / 100
+        total_cost = product_value + shipping_cost + insurance_cost + import_duty + IGST
+
+        # Calculate percentages for each category
+        percentages = {
+            "Product Value": round((product_value / total_cost) * 100, 2),
+            "Shipping Cost": round((shipping_cost / total_cost) * 100, 2),
+            "Insurance Cost": round((insurance_cost / total_cost) * 100, 2),
+            "Import Duty": round((import_duty / total_cost) * 100, 2),
+            "IGST": round((IGST / total_cost) * 100, 2),
+        }
+
+        # Return JSON response with data
+        return JsonResponse({
+            "breakdown": {
+                "Product Value": product_value,
+                "Shipping Cost": shipping_cost,
+                "Insurance Cost": insurance_cost,
+                "Import Duty": import_duty,
+                "IGST": IGST,
+                "Total Cost": total_cost,
+            },
+            "percentages": percentages,
+        })
+
+    return render(request, "estimator/index.html")
 
 
 def packreco(request):
     return render(request, "packaging/packaging_rec.html")
 
+def logistics(request):
+    return render(request, "logistics/logistic.html")
+
+def doc_buddy(request):
+    return render(request, "docBuddy/doc.html")
+
 def landing(request):
     return render(request, "landing.html")
-
 def shiptrack(request):
     return render(request,"user/shipment_tracking.html")
 

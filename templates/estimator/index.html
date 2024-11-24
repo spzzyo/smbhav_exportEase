@@ -1,12 +1,161 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Import-Export Cost Estimator</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <h1>Check</h1>
-</body>
-</html>
+{% extends "layouts/base.html" %}
+
+{% load static %}
+{% block title %}India-to-Germany Furniture Import Charges Calculator{% endblock %}
+
+{% block stylesheets %}
+<style>
+  .calculator-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  form input, form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  form button {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  form button:hover {
+    background-color: #0056b3;
+  }
+
+  #breakdown ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  #breakdown ul li {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  canvas {
+    display: block;
+    margin: 0 auto;
+    max-width: 80%;
+  }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="panel-header panel-header-sm"></div>
+
+<div class="content">
+  <div class="calculator-container">
+    <div class="card">
+      <div class="card-header">India-to-Germany Furniture Import Charges Calculator</div>
+      <div class="card-body">
+        <form id="importForm">
+          {% csrf_token %}
+          
+          <!-- Updated Labels for INR (product value, shipping, insurance costs) -->
+          <label for="product_value">Product Value (EUR):</label>
+          <input type="number" step="0.01" id="product_value" name="product_value" placeholder="Enter product value in EUR" required>
+
+          <label for="shipping_cost">Shipping Cost (EUR):</label>
+          <input type="number" step="0.01" id="shipping_cost" name="shipping_cost" placeholder="Enter shipping cost in EUR" required>
+
+          <label for="insurance_cost">Insurance Cost (EUR):</label>
+          <input type="number" step="0.01" id="insurance_cost" name="insurance_cost" placeholder="Enter insurance cost in EUR" required>
+
+          <!-- Optional fields for Import Duty Rate and Tax Rate (default values for Furniture) -->
+          <label for="import_duty_rate">Import Duty Rate (%) (Default: 25%):</label>
+          <input type="number" step="0.01" id="import_duty_rate" name="import_duty_rate" placeholder="Enter import duty rate" value="25.0" required>
+
+          <label for="tax_rate">IGST Rate (%) (Default: 18%):</label>
+          <input type="number" step="0.01" id="tax_rate" name="tax_rate" placeholder="Enter IGST rate" value="18.0" required>
+
+          <button type="submit">Calculate</button>
+        </form>
+
+        <h2>Breakdown of Charges:</h2>
+        <div id="breakdown"></div>
+
+        <h2>Pie Chart:</h2>
+        <canvas id="pieChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.getElementById("importForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const response = await fetch("", { method: "POST", body: formData });
+
+      const data = await response.json();
+      const breakdown = data.breakdown;
+      const percentages = data.percentages;
+
+      const breakdownDiv = document.getElementById("breakdown");
+      breakdownDiv.innerHTML = `
+          <ul>
+              <li>Product Value: EUR ${breakdown["Product Value"]}</li>
+              <li>Shipping Cost: EUR ${breakdown["Shipping Cost"]}</li>
+              <li>Insurance Cost: EUR ${breakdown["Insurance Cost"]}</li>
+              <li>Import Duty: EUR ${breakdown["Import Duty"]}</li>
+              <li>Tax: EUR ${breakdown["Tax"]}</li>
+              <li>Total Cost: EUR ${breakdown["Total Cost"]}</li>
+          </ul>
+      `;
+
+      const ctx = document.getElementById("pieChart").getContext("2d");
+      new Chart(ctx, {
+          type: "pie",
+          data: {
+              labels: Object.keys(percentages),
+              datasets: [{
+                  data: Object.values(percentages),
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#FF5722"],
+              }],
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: { position: "top" },
+              },
+          },
+      });
+  });
+</script>
+{% endblock javascripts %}

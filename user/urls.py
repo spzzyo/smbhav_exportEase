@@ -15,5 +15,5 @@ urlpatterns = [
     path("shipper-dashboard/", shipper_dashboard, name="shipper-dashboard"),
     path("actor-dashboard/", actor_Dashboard_with_all_docs, name="actor-dashboard"),
     path("process_forgery_checks/", process_forgery_checks, name="process_forgery_checks"),
-    path("shipment-tracking/", shipment_tracking, name="shipment-tracking"),
+    
 ]

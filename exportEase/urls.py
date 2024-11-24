@@ -26,7 +26,7 @@ urlpatterns = [
     path("", include('doc_manager.urls')),
     path("", include('mlModel.urls')),
     path("notifications/",include("notification.urls")),
-    path("", include('doc_generator.urls')),
+ 
 
 
 ]
