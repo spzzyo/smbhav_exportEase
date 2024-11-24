@@ -28,5 +28,6 @@ urlpatterns = [
     path("notifications/",include("notification.urls")),
     path("", include('doc_generator.urls')),
 
+
 ]
 
