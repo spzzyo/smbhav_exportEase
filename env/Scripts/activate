@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\vnn\Hackathon\Smbhv\Prototype\exportEase\env"
+VIRTUAL_ENV="C:\Users\YOSHITA\OneDrive\Desktop\smbhv\recentEXportEase\exportEase\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

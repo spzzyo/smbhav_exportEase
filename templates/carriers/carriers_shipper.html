@@ -26,59 +26,13 @@
     <div class="panel-header panel-header-sm">
     </div>
     <div class="content">
-      <div class="shipping-type">
-      <div class="w3-container">
-        <h2>Tabs in a Grid</h2>
-        
-        <div class="w3-row">
-          <a href="javascript:void(0)" onclick="openCity(event, 'WaterWays');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">WaterWays</div>
-          </a>
-          <a href="javascript:void(0)" onclick="openCity(event, 'AirWays');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">AirWays</div>
-          </a>
-          <a href="javascript:void(0)" onclick="openCity(event, 'RoadWays');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">RoadWays</div>
-          </a>
-        </div>
-        
-        <div id="WaterWays" class="w3-container city" style="display:none">
-          <h2>WaterWays</h2>
-          <p>WaterWays is the capital city of England.</p>
-
-         
-          <div class="card-body ">
-            <div id="mapw" class="map"></div>
-          </div>
-          
-                    
-        </div>
-        
-        <div id="AirWays" class="w3-container city" style="display:none">
-          <h2>AirWays</h2>
-          <p>AirWays is the capital of France.</p> 
-
-        
-        <div class="card-body ">
-          <div id="mapa" class="map"></div>
-        </div>
-        
-        </div>
-        
-        <div id="RoadWays" class="w3-container city" style="display:none">
-          <h2>RoadWays</h2>
-          <p>RoadWays is the capital of Japan.</p>
-        </div>
-      </div>
-      </div>
-      
       
       
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title"> TODO: Add Country and port wise filter. Add map</h4>
+              <h4 class="card-title"> Quotations Received </h4>
 
             </div>
             <div class="card-body">
@@ -112,13 +66,13 @@
                     <tr>
                     
                       <td>
-                        Saket  <!-- Display Carrier Name -->
+                        Exporter  <!-- Display Carrier Name -->
                       </td>
                       <td>
-                        New York
+                        MUNDRA
                       </td>
                       <td>
-                        Los Angeles
+                        BREMERHAVEN
                       </td>
                       <td>
                         MHC768 <!-- Display Vessel ID -->
@@ -128,7 +82,7 @@
                       </td>
                       <td class="text-right">
                         <!-- Get Quote Button with carriername and vesselID as URL parameters -->
-                        <a href="{% url 'chat-page' %}?carrier_name={{ request.user.username }}&username=saket&pol=New%20York&pod=Los%20Angeles&transit_time=5%20days&vessel_id=MHC768&departure_date=2024-12-15" class="btn btn-warning">Give Quote</a>
+                        <a href="{% url 'chat-page' %}?carrier_name={{ request.user.username }}&username=exporter&pol=MUNDRA&pod=BREMERHAVEN&transit_time=5%20days&vessel_id=MHC768&departure_date=2024-12-15" class="btn btn-warning">Give Quote</a>
                       </td>
                     </tr>
                     <!-- Repeat this row for more data -->

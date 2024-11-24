@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'chatPortal',
     'doc_manager',
     'mlModel',
+    'doc_generator'
 ]
 
 MIDDLEWARE = [
@@ -144,12 +145,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "user:login"
 LOGIN_REDIRECT_URL = "dashboard"
-LOGOUT_REDIRECT_URL = "login"
+LOGOUT_REDIRECT_URL = "user:login"
 
 AUTH_USER_MODEL = "user.CustomUser"
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 SESSION_COOKIE_AGE = 1209600  # Two weeks
+
+
+
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -157,3 +161,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "vinesh.nadar@spit.ac.in"
 EMAIL_HOST_PASSWORD = "Vnnvnn2703"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

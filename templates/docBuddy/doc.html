@@ -1,0 +1,112 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+<style>
+.equal-size-image {
+    width: 100%; /* Ensures images take full width of the container */
+    height: 200px; /* Set a fixed height for uniformity */
+    object-fit: cover; /* Ensures that the image fills the container without distorting */
+}
+
+.clickable-image {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clickable-image:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    cursor: pointer; /* Change cursor to pointer */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+.card-icon {
+    font-size: 60px; /* Larger icon size */
+    margin-bottom: 20px;
+    color: #007bff; /* Icon color */
+}
+
+.card {
+    margin: 10px; /* Space between cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer; /* Change cursor to pointer when hovering over card */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Slight zoom effect for the whole card */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+.card-body {
+    padding-top: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #555;
+}
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="panel-header panel-header-sm">
+        <!-- Panel Header Content Here (if needed) -->
+    </div>
+
+    <div class="content">
+        <!-- Row for three cards -->
+        <div class="row">
+            <!-- Card 1: Talk to your Doc -->
+            <div class="col-md-4">
+                <a href="http://15.206.210.138:8501/" class="card">
+                    <i class="fas fa-comments card-icon"></i> <!-- Font Awesome Icon for Talk to Doc -->
+                    <div class="card-body">
+                        <h5 class="card-title">Talk to your Doc</h5>
+                        <p class="card-text">Difficulty Understanding Complex Documents? Talk to them.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 2: Document Generation -->
+            <div class="col-md-4">
+                <a href="https://f358-2409-40c0-39-e558-5c63-6240-a327-e2a7.ngrok-free.app/" class="card">
+                    <i class="fas fa-file-alt card-icon"></i> <!-- Font Awesome Icon for Document Generation -->
+                    <div class="card-body">
+                        <h5 class="card-title">Document Generation</h5>
+                        <p class="card-text">Generate important documents quickly and efficiently.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Card 3: Doc Translator -->
+            <div class="col-md-4">
+                <a href="http://3.110.51.222:8501/" class="card">
+                    <i class="fas fa-language card-icon"></i> <!-- Font Awesome Icon for Doc Translator -->
+                    <div class="card-body">
+                        <h5 class="card-title">Doc Translator</h5>
+                        <p class="card-text">Translate your documents to any language easily.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}
+    <!-- Add any specific JS here -->
+{% endblock javascripts %}

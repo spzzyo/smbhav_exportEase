@@ -1,37 +1,105 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
+<div class="panel-header panel-header-sm"></div>
+<h1 class="text-center my-4">Category: {{ category_name }}</h1>
 
-<h1>Category: {{ category_name }}</h1>
-<p>Upload Documents for your <strong>{{ category_name }}</strong> business</p>
+<p class="text-center">Upload Documents for your <strong>{{ category_name }}</strong> business</p>
 
-<form action="{% url 'category:upload-documents' category_id %}" method="post" enctype="multipart/form-data">
+<!-- Form -->
+<form action="{% url 'category:upload-documents' category_id %}" method="post" enctype="multipart/form-data" class="mx-auto" style="max-width: 800px;">
     {% csrf_token %}
-    <div>
+    
+    <!-- Required Documents Section -->
+    <div class="mb-4">
         <p><strong>Required Documents:</strong></p>
-        <ul>
+        <div class="row">
             {% for doc in required_documents %}
-                <li>
-                    {{ doc }} 
-                    <input type="file" name="document_{{ forloop.counter }}" accept=".pdf,.doc,.docx,.jpg,.png" required>
-                </li>
+                <div class="col-12 mb-3">
+                    <div class="card p-4 shadow-sm">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-column w-100">
+                                <!-- Document Name -->
+                                <strong class="mb-2">{{ doc }}</strong>
+                                <input type="file" name="document_{{ forloop.counter }}" id="document_{{ forloop.counter }}" accept=".pdf,.doc,.docx,.jpg,.png" class="form-control" required>
+                            </div>
+                            <!-- Status Indicator -->
+                            
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Export Certificates for Germany -->
+    <div class="mb-4">
+        <p><strong>Certificates Required for Export to Germany:</strong></p>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <div class="card p-4 shadow-sm">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column w-100">
+                            <!-- Certificate Name -->
+                            <strong class="mb-2">Furniture Quality Certificate (Germany)</strong>
+                            <input type="file" name="document_quality_certificate" id="document_quality_certificate" accept=".pdf,.doc,.docx,.jpg,.png" class="form-control" >
+                        </div>
+                        <!-- Status Indicator -->
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <div class="card p-4 shadow-sm">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column w-100">
+                            <!-- Certificate Name -->
+                            <strong class="mb-2">CE Marking Certificate (Germany)</strong>
+                            <input type="file" name="document_ce_marking" id="document_ce_marking" accept=".pdf,.doc,.docx,.jpg,.png" class="form-control" >
+                        </div>
+                        <!-- Status Indicator -->
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <div class="card p-4 shadow-sm">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column w-100">
+                            <!-- Certificate Name -->
+                            <strong class="mb-2">FSC Certification (Germany)</strong>
+                            <input type="file" name="document_fsc_certification" id="document_fsc_certification" accept=".pdf,.doc,.docx,.jpg,.png" class="form-control" >
+                        </div>
+                        <!-- Status Indicator -->
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Documents Section -->
+    <div class="mb-4">
+        <label for="additional_documents" class="form-label">Drop any additional documents:</label>
+        <input type="file" id="additional_documents" name="additional_documents" multiple accept=".pdf,.doc,.docx,.jpg,.png" class="form-control">
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary w-100">Submit Documents</button>
+    </div>
+</form>
+
+<!-- Message Display Section -->
+{% if messages %}
+    <div class="mt-4">
+        <ul class="list-unstyled">
+            {% for message in messages %}
+                <li class="alert alert-info">{{ message }}</li>
             {% endfor %}
         </ul>
     </div>
-    <div>
-        <label for="additional_documents">Drop any additional documents:</label>
-        <input type="file" id="additional_documents" name="additional_documents" multiple accept=".pdf,.doc,.docx,.jpg,.png">
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Submit Documents</button>
-</form>
-
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
 {% endif %}
-
 {% endblock content %}

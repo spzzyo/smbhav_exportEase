@@ -7,6 +7,22 @@
 <style>
     
 
+    .two-columns {
+            display: flex;
+            gap: 20px; /* Space between the two columns */
+            padding: 20px;
+        }
+
+        .column {
+            flex: 1; /* Each column takes equal width */
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-height: 300px; /* Optional: Set a minimum height */
+        }
+
         .chat-container {
             max-width: 500px;
            
@@ -27,6 +43,24 @@
             text-align: right;
             padding: 10px;
         }
+
+       
+    .parameter-tag {
+        display: inline-block;
+        background-color: #f5f5f5;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #061a6a;
+        border: 1px solid #061a6a;
+    }
+
+    .parameter-tag::after {
+        content: ' ✅';
+        color: green;
+    }
+
 
         .chat-logout a {
             text-decoration: none;
@@ -167,11 +201,13 @@
     </div>
 </div>
 
+<div class="two-columns">
+    <div class="column">
 <div class="chat-container">
 
         
     <div class="chat-header">
-        <h1>Talk to your Shipper</h1>
+        <h1>Chat Here</h1>
     </div>
 
     <div class="chat__item__container" id="id_chat_item_container">
@@ -197,6 +233,84 @@
 ">
     <i class="fas fa-phone" style="margin-right: 10px; "></i> Get on a Protected Call
 </button>
+
+
+
+</div>
+</div>
+
+<!-- CSS for Parameter Tags -->
+<div class="column">
+<div class="negotiation-parameters">
+    <h3 style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Negotiation Parameters Discussed:</h3>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <!-- Pricing Structure -->
+        <div>
+            <h4 style="margin: 0; font-size: 1.2em;">Pricing Structure:</h4>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                <span class="parameter-tag">Base Rate ✅</span>
+                <span class="parameter-tag">Surcharges ✅</span>
+                <span class="parameter-tag">Seasonal Charges ✅</span>
+            </div>
+        </div>
+        
+        <!-- Inclusions -->
+        <div>
+            <h4 style="margin: 0; font-size: 1.2em;">Inclusions:</h4>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                <span class="parameter-tag">Sea Freight Handling ✅</span>
+                <span class="parameter-tag">Basic Handling ✅</span>
+            </div>
+        </div>
+        
+        <!-- Exclusions -->
+        <div>
+            <h4 style="margin: 0; font-size: 1.2em;">Exclusions:</h4>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                <span class="parameter-tag">Customs ✅</span>
+                <span class="parameter-tag">Packaging ✅</span>
+                <span class="parameter-tag">Warehouse Pickup ✅</span>
+            </div>
+        </div>
+        
+        <!-- Contingency Plans -->
+        <div>
+            <h4 style="margin: 0; font-size: 1.2em;">Contingency Plans:</h4>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                <span class="parameter-tag">Delay Protocol ✅</span>
+                <span class="parameter-tag">Return Policy ✅</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Contract Button -->
+    <button style="
+        display: block; 
+        margin: 20px auto 0 auto; 
+        padding: 10px 20px; 
+        font-size: 16px; 
+        font-weight: bold; 
+        background-color: #061a6a; 
+        color: #fff; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer;">
+        Generate Contract ✨
+    </button>
+</div>
+</div>
+
+</div>
+
+<div class="card-footer text-center">
+    <div class="card-footer text-center">
+        <a 
+        href = "{% url 'category:category-detail' 2 %}"
+            class="btn btn-primary w-50">
+            Proceed to Next Step
+        </a>
+    </div>
 </div>
 
 {% endblock content %}
@@ -290,6 +404,38 @@
             loader.style.display = "none";
             button.style.display = "flex"; 
         }, 1500); 
+    });
+</script>
+
+<script>
+    document.getElementById("generateContractButton").addEventListener("click", function() {
+        
+        const name = request.username ; 
+        const importer = "ABC Importers";
+        const pod = "Mumbai";
+        const pol = "New York";
+        const date = "2024-11-01";
+
+        // Construct the URL with parameters
+        const url = `/generate_contract/?name=${encodeURIComponent(name)}&importer=${encodeURIComponent(importer)}&pod=${encodeURIComponent(pod)}&pol=${encodeURIComponent(pol)}&date=${encodeURIComponent(date)}`;
+
+        // Make a GET request to your Django view
+        fetch(url)
+            .then(response => response.json())  // assuming the response is in JSON format
+            .then(data => {
+                if (data.success) {
+                    // If the document is generated, show the link to download
+                    alert('Contract generated successfully!');
+                    window.location.href = data.pdf_url;  // Redirect to the PDF download link
+                } else {
+                    // Handle errors
+                    alert('Error generating contract: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong!');
+            });
     });
 </script>
 

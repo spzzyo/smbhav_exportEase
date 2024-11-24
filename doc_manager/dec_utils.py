@@ -37,29 +37,40 @@ def retrieve_metadata_from_s3(metadata_s3_key):
     os.remove(metadata_path)
     return metadata
 
-def decrypt_and_verify_document(encrypted_s3_key, metadata_s3_key):
-    """Admin: Decrypt and verify document before sharing."""
-    # Step 1: Download encrypted document and metadata from S3
-    encrypted_path = "encrypted_document.pdf"
-    s3_client.download_file(S3_BUCKET_NAME, encrypted_s3_key, encrypted_path)
-    metadata = retrieve_metadata_from_s3(metadata_s3_key)
+def decrypt_and_verify_document(s3_encrypted_key, s3_metadata_key):
+    """Decrypt and verify a document using dynamically retrieved keys and metadata."""
 
-    # Step 2: Extract the AES key and signature
+    # Step 1: Download encrypted file and metadata
+    encrypted_path = "temp_encrypted_file"
+    metadata_path = "temp_metadata.txt"
+    s3_client.download_file(S3_BUCKET_NAME, s3_encrypted_key, encrypted_path)
+    s3_client.download_file(S3_BUCKET_NAME, s3_metadata_key, metadata_path)
+
+    # Step 2: Read metadata
+    with open(metadata_path, "r") as f:
+        metadata = eval(f.read())
+
+    # Step 3: Decrypt AES key
     aes_key = base64.b64decode(metadata["aes_key"])
-    signature = bytes.fromhex(metadata["signature"])
 
-    # Step 3: Verify the signature
+    # Step 4: Decrypt document
+    decrypted_path = decrypt_document(encrypted_path, aes_key)
+
+    # Step 5: Verify signature
+    signature = bytes.fromhex(metadata["signature"])
+    with open(f"keys/{os.path.basename(s3_metadata_key).split('_')[0]}_public.pem", "rb") as f:
+        public_key_pem = f.read()
     with open(encrypted_path, "rb") as f:
         encrypted_content = f.read()
+    # if not verify_signature(encrypted_content, signature, public_key_pem):
+    #     raise ValueError("Signature verification failed.")
+    
     if verify_signature(encrypted_content, signature, public_key_pem):
-        print("Document signature verified.")
-    else:
-        print("Document signature verification failed.")
-        return
+        raise ValueError("Signature verification failed.")
 
-    # Step 4: Decrypt the document
-    decrypted_path = decrypt_document(encrypted_path, aes_key)
-    print("Decrypted document saved at:", decrypted_path)
 
-    # Optionally: Delete the encrypted document after decryption
+    # Cleanup
     os.remove(encrypted_path)
+    os.remove(metadata_path)
+
+    return decrypted_path

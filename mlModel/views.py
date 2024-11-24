@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .ml_model import predict  
 from .forms import ImageUploadForm
 
+
 def predict_view(request):
     result_label = None  # Initialize the result label
     if request.method == 'POST':

@@ -1,13 +1,189 @@
+
+
 {% extends "layouts/base.html" %}
 
-{% block content %}
+{% load static %}
+{% block title %} User {% endblock %} 
 
-<h1>Choose Category</h1>
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    .content-container {
+        height: 60vh; /* Set content container height to 60% of viewport height */
+        overflow-y: auto; /* Allow scrolling if content exceeds this height */
+    }
+
+    .determine-btn {
+        display: flex;
+        margin: 5px;
+        align-items: center;
+        justify-content: center;
+        background-color: #061a6a;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px; /* Add space between content and button */
+    }
+
+    .determine-btn img {
+        width: 60px;
+        height: 30px;
+        margin-right: 10px;
+        margin-left: 20px;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="panel-header panel-header-sm"></div>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="title">Enter Product Description</h5>
+                    </div>
+                    <div class="card-body content-container">
+                        <button id="protected-call-button" class="determine-btn">
+                            Import directly from       
+                            <img src="{% static 'assets/img/amazon.png' %}" alt="Amazon Logo"> 
+                        </button>
+
+                        <form>
+                            <div class="row">
+                                <div class="col-md-5 pr-1">
+                                    <div class="form-group">
+                                        <label>Weight</label>
+                                        <input type="text" class="form-control" placeholder="In kg" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 px-1">
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input type="text" class="form-control" placeholder="In units" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 pr-1">
+                                    <div class="form-group">
+                                        <label>Height</label>
+                                        <input type="text" class="form-control" placeholder="in Inches" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 px-1">
+                                    <div class="form-group">
+                                        <label>Width</label>
+                                        <input type="text" class="form-control" placeholder="in Inches" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pl-1">
+                                    <div class="form-group">
+                                        <label>Depth</label>
+                                        <input type="text" class="form-control" placeholder="in Inches" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 px-1">
+                                    <div class="form-group">
+                                        <label>Certifications</label>
+                                        <input type="text" class="form-control" placeholder="Approvals from Reputed Bodies" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pl-1">
+                                    <div class="form-group">
+                                        <label>Product Use Case</label>
+                                        <input type="number" class="form-control" placeholder="ZIP Code">
+                                    </div>
+                                </div>
+                            </div>
+             
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mx-auto mt-5">
+                <div class="card shadow">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h2 class="mb-0">Upload an Item</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_item_image" class="form-label">Select an Image:</label>
+                                <input 
+                                    type="file" 
+                                    id="id_item_image" 
+                                    name="item_image" 
+                                    accept="image/*" 
+                                    class="form-control" 
+                                    onchange="previewImage(event)" 
+                                    {% if form.item_image.value %} value="{{ form.item_image.value }}" {% endif %}>
+                            </div>
+                            <div class="text-center mb-3">
+                                <img 
+                                    id="image_preview" 
+                                    src="#" 
+                                    alt="Image Preview" 
+                                    style="display: none; width: 150px; height: auto; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Upload</button>
+                        </form>
+                    </div>
+                    {% if result_label %}
+                    <div class="card-footer text-center">
+                        <h4 class="text-success">Predicted Item:</h4>
+                        <p class="fs-5">{{ result_label }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Determine HSN Code Button -->
+        <div class="row">
+            <div class="col-md-12">
+                <button class="determine-btn" id="determine-hsn-btn">
+                    Determine HSN Code
+                </button>
+            </div>
+        </div>
+        <h1>Choose Category</h1>
 <ul>
     <li><a href="{% url 'category:category-detail' 1 %}">Fruits</a></li>
     <li><a href="{% url 'category:category-detail' 2 %}">Furniture</a></li>
     <li><a href="{% url 'category:category-detail' 3 %}">Electronics</a></li>
     <li><a href="{% url 'category:category-detail' 4 %}">Clothes</a></li>
 </ul>
+    </div>
 
 {% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}
+<script>
+    // JavaScript function to preview the image
+    function previewImage(event) {
+        const imagePreview = document.getElementById('image_preview');
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = 'none';
+        }
+    }
+</script>
+{% endblock javascripts %}

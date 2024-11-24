@@ -1,33 +1,42 @@
 {% extends 'layouts/base.html' %}
 
+
 {% block content %}
+<div class="panel-header panel-header-sm"></div>
+<section style="text-align: center; margin: 20px auto;">
+    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 20px;">Actor Dashboard</h1>
 
-<h1>Actor Dashboard</h1>
+    <div style="overflow-x: auto; margin: 0 auto; width: 80%;">
+        <table style="border-collapse: collapse; width: 100%; margin: 20px auto; border: 1px solid #ddd; text-align: left;">
+            <thead>
+                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ccc;">
+                    <th style="padding: 10px;">Document Title</th>
+                    <th style="padding: 10px;">Exporter Name</th>
+                    <th style="padding: 10px;">Request Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px;">{{ document.title }}</td>
+                        <td style="padding: 10px;">{{ document.exporter.username }}</td>
+                        <td style="padding: 10px; text-align: center;">
+                            <form action="{% url 'request_document_access' document.id %}" method="post" style="display: inline-block;">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        style="background-color: #007bff; color: #fff; border: none; padding: 8px 12px; font-size: 14px; cursor: pointer; border-radius: 4px;">
+                                    Request Access
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Document Title</th>
-                <th>Exporter Name</th>
-                <th>Category</th>
-                <th>Request Access</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for document in documents %}
-            <tr>
-                <td>{{ document.title }}</td>
-                <td>{{ document.exporter.username }}</td>
-                <!-- <td>{{ document.category }}</td> -->
-                <td>
-                    <form action="{% url 'request_document_access' document.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Request Access</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+    {% if not documents %}
+        <p style="font-size: 16px; color: #888; margin-top: 20px;">No documents available at the moment.</p>
+    {% endif %}
+</section>
 {% endblock %}

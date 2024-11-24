@@ -1,5 +1,6 @@
 {% extends "layouts/base.html" %}
 
+{% load static %}
 {% block title %} User {% endblock %} 
 
 <!-- Specific Page CSS goes HERE -->
@@ -46,7 +47,7 @@
                     <div class="card-body content-container">
                         <button id="protected-call-button" class="determine-btn">
                             Import directly from       
-                            <img src="C:/Users/YOSHITA/OneDrive/Desktop/smbhv/UITemplates/smbhv/ExportEase/static/assets/img/amazon.png" alt="Amazon Logo"> 
+                            <img src="{% static 'assets/img/amazon.png' %}" alt="Amazon Logo"> 
                         </button>
 
                         <form>
@@ -54,13 +55,13 @@
                                 <div class="col-md-5 pr-1">
                                     <div class="form-group">
                                         <label>Weight</label>
-                                        <input type="text" class="form-control" placeholder="In kg" value="{{ request.user.id }}">
+                                        <input type="text" class="form-control" placeholder="In kg" value="">
                                     </div>
                                 </div>
                                 <div class="col-md-3 px-1">
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input type="text" class="form-control" placeholder="In units" value="{{ request.user.username }}">
+                                        <input type="text" class="form-control" placeholder="In units" value="">
                                     </div>
                                 </div>
                             </div>
@@ -68,13 +69,13 @@
                                 <div class="col-md-3 pr-1">
                                     <div class="form-group">
                                         <label>Height</label>
-                                        <input type="text" class="form-control" placeholder="in Inches" value="Mike">
+                                        <input type="text" class="form-control" placeholder="in Inches" value="">
                                     </div>
                                 </div>
                                 <div class="col-md-3 px-1">
                                     <div class="form-group">
                                         <label>Width</label>
-                                        <input type="text" class="form-control" placeholder="in Inches" value="Andrew">
+                                        <input type="text" class="form-control" placeholder="in Inches" value="">
                                     </div>
                                 </div>
                                 <div class="col-md-3 pl-1">
@@ -94,32 +95,39 @@
                                 <div class="col-md-4 pl-1">
                                     <div class="form-group">
                                         <label>Product Use Case</label>
-                                        <input type="number" class="form-control" placeholder="ZIP Code">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Additional Comments</label>
-                                        <textarea rows="4" cols="80" class="form-control" placeholder="Add more description" value="Mike"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </form>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="card-footer text-center">
+                        <a 
+                            href="{% url 'shipping-comparison' %}"
+                            class="btn btn-primary w-50">
+                            Proceed to Next Step
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mx-auto mt-5">
                 <div class="card shadow">
-                    <div class="card-header text-center bg-primary text-white">
-                        <h2 class="mb-0">Upload an Item</h2>
+                    <!-- Card Header -->
+                    <div class="card-header text-center" style="background-color: #FF9900; color: #FFFFFF;">
+                        <h2 class="mb-0">AI-Powered Item Category Recognition</h2>
+                        <p style="font-style: italic; color: #000000;">"Let the AI recognize and classify your item with just a click!"</p>
                     </div>
+            
+                    <!-- Card Body -->
                     <div class="card-body">
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
+                            <!-- File Input -->
                             <div class="mb-3">
-                                <label for="id_item_image" class="form-label">Select an Image:</label>
+                                <label for="id_item_image" class="form-label" style="color: #333;">Select an Image:</label>
                                 <input 
                                     type="file" 
                                     id="id_item_image" 
@@ -129,6 +137,8 @@
                                     onchange="previewImage(event)" 
                                     {% if form.item_image.value %} value="{{ form.item_image.value }}" {% endif %}>
                             </div>
+            
+                            <!-- Image Preview -->
                             <div class="text-center mb-3">
                                 <img 
                                     id="image_preview" 
@@ -136,33 +146,71 @@
                                     alt="Image Preview" 
                                     style="display: none; width: 150px; height: auto; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Upload</button>
+            
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn w-100" style="background-color: #146EB4; color: #FFFFFF;">
+                                Upload
+                            </button>
                         </form>
                     </div>
-                    {% if result_label %}
-                    <div class="card-footer text-center">
-                        <h4 class="text-success">Predicted Item:</h4>
-                        <p class="fs-5">{{ result_label }}</p>
+            
+                    <!-- Item Details Section -->
+                    {% if result_label or fragility_determined or material_determined %}
+                    <div class="d-flex flex-column align-items-center card-footer" style="background-color: #F3F3F3; border-top: 1px solid #DDDDDD;">
+                        <h4 class="text-success text-center" style="color: #146EB4;">Item Details:</h4>
+                        <p class="fs-5 text-center" style="color: #333;">
+                            <strong>Item Determined:</strong> {{ result_label|default:"___________" }}
+                        </p>
+                        <p class="fs-5 text-center" style="color: #333;">
+                            <strong>Fragility Determined:</strong> {{ fragility_determined|default:"Sturdy" }}
+                        </p>
+                        <p class="fs-5 text-center" style="color: #333;">
+                            <strong>Material Determined:</strong> {{ material_determined|default:"Wooden" }}
+                        </p>
+                    </div>
+            
+                    <!-- Determine HSN Button -->
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-auto">
+                            <button class="determine-btn btn" id="determine-hsn-btn" style="background-color: #FF9900; color: #FFFFFF; padding: 10px 20px;" onclick="revealCategoryAndHSN()">
+                                Determine Category & HSN Code
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- Revealed Category and HSN Code -->
+                    <div id="category-hsn" class="d-flex flex-column align-items-center mt-3" style="display: none;">
+                        <p class="fs-5 text-center" style="color: #333;">
+                            <strong>Category:</strong> Other Furniture And Parts Thereof - Other Wooden Furniture
+                        </p>
+                        <p class="fs-5 text-center" style="color: #333;">
+                            <strong>HSN Code:</strong> 94036000
+                        </p>
                     </div>
                     {% endif %}
                 </div>
             </div>
+            
+          
+            
+            
         </div>
 
         <!-- Determine HSN Code Button -->
-        <div class="row">
-            <div class="col-md-12">
-                <button class="determine-btn" id="determine-hsn-btn">
-                    Determine HSN Code
-                </button>
-            </div>
-        </div>
+        
+
     </div>
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE -->
 {% block javascripts %}
+<script>
+    function revealCategoryAndHSN() {
+        // Show the category and HSN code when the button is clicked
+        document.getElementById("category-hsn").style.display = "block";
+    }
+</script>
 <script>
     // JavaScript function to preview the image
     function previewImage(event) {

@@ -1,12 +1,13 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Tables {% endblock %} 
+{% block title %}Tables{% endblock %}
 
-<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-  .shipping-type {
+
+
+.shipping-type {
     margin-top: 5%;
     margin-bottom: 5%;
     max-width: 60%;
@@ -16,153 +17,235 @@
     height: 400px; /* The height is 400 pixels */
     width: 100%; /* The width is the width of the web page */
 }
+  
 
+  .slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .slider {
+    width: 80%;
+  }
+
+  .slider-value {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  /* Initially hide the results table */
+  #resultsTable {
+    display: none;
+  }
 </style>
-
 {% endblock stylesheets %}
 
 {% block content %}
+<div class="panel-header panel-header-sm"></div>
+<div class="content">
+  <div class="shipping-type">
+    <div class="w3-container">
+      <h2>Compare between Various Shipping Options</h2>
+      
+      <div class="w3-row">
+        <a href="javascript:void(0)" onclick="openCity(event, 'WaterWays');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">WaterWays</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openCity(event, 'AirWays');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">AirWays</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openCity(event, 'RoadWays');">
+          <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">RoadWays</div>
+        </a>
+      </div>
+      
+      <div id="WaterWays" class="w3-container city" style="display:none">
+        <h2>WaterWays</h2>
+      
 
-    <div class="panel-header panel-header-sm">
-    </div>
-    <div class="content">
-      <div class="shipping-type">
-      <div class="w3-container">
-        <h2>Tabs in a Grid</h2>
-        
-        <div class="w3-row">
-          <a href="javascript:void(0)" onclick="openCity(event, 'WaterWays');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">WaterWays</div>
-          </a>
-          <a href="javascript:void(0)" onclick="openCity(event, 'AirWays');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">AirWays</div>
-          </a>
-          <a href="javascript:void(0)" onclick="openCity(event, 'RoadWays');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">RoadWays</div>
-          </a>
-        </div>
-        
-        <div id="WaterWays" class="w3-container city" style="display:none">
-          <h2>WaterWays</h2>
-        
-
-         
-          <div class="card-body ">
-            <div id="mapw" class="map"></div>
-          </div>
-          
-                    
-        </div>
-        
-        <div id="AirWays" class="w3-container city" style="display:none">
-          <h2>AirWays</h2>
-                
+       
         <div class="card-body ">
-          <div id="mapa" class="map"></div>
+          <div id="mapw" class="map"></div>
         </div>
         
-        </div>
-        
-        <div id="RoadWays" class="w3-container city" style="display:none">
-          <h2>RoadWays</h2>
-         
-        </div>
-      </div>
+                  
       </div>
       
-      
-      
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title"> TODO: Add Country and port wise filter. Add map</h4>
-
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead class="text-primary">
-                    <th>
-                      <!-- Column for Carrier Logo -->
-                    </th>
-                    <th>
-                      Carrier Name
-                    </th>
-                    <th>
-                      Port of Load (POL)
-                    </th>
-                    <th>
-                      Port of Discharge (POD)
-                    </th>
-                    <th>
-                      Fastest Transit Time
-                    </th>
-                    <th>
-                      Vessel ID
-                    </th>
-                    <th class="text-right">
-                      Next Departure
-                    </th>
-                    <th class="text-right">
-                      <!-- Column for Action (Get Quote button) -->
-                    </th>
-                  </thead>
-                  <tbody>
-                    <!-- Example row -->
-                    <tr>
-                      <td>
-                        <img src="/static/assets/img/carrierLogo.png" alt="Carrier Logo" class="carrier-logo" style="width: 35px; height: auto">
-                      </td>
-                      <td>
-                        MSC  <!-- Display Carrier Name -->
-                      </td>
-                      <td>
-                        New York
-                      </td>
-                      <td>
-                        Los Angeles
-                      </td>
-                      <td>
-                        5 days
-                      </td>
-                      <td>
-                        MHC768 <!-- Display Vessel ID -->
-                      </td>
-                      <td class="text-right">
-                        2024-12-15
-                      </td>
-                      <td class="text-right">
-                        <!-- Get Quote Button with carriername and vesselID as URL parameters -->
-                        <a href="{% url 'chat-page' %}?username={{ request.user.username }}&carrier_name=MSC&pol=New%20York&pod=Los%20Angeles&transit_time=5%20days&vessel_id=MHC768&departure_date=2024-12-15"  class="btn btn-warning">Get Quote</a>
-
-                   
-                      </td>
-                    </tr>
-                    <!-- Repeat this row for more data -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div id="AirWays" class="w3-container city" style="display:none">
+        <h2>AirWays</h2>
+              
+      <div class="card-body ">
+        <div id="mapa" class="map"></div>
       </div>
-
-  
-
+      
+      </div>
+      
+      <div id="RoadWays" class="w3-container city" style="display:none">
+        <h2>RoadWays</h2>
+       
+      </div>
+    </div>
     </div>
 
+  <!-- Section to add To and From location -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Location Filters and Price Negotiation</h4>
+        </div>
+        <div class="card-body">
+          <form id="filterForm">
+            <!-- From Location Dropdown -->
+            <div class="form-group">
+              <label for="fromLocation">From</label>
+              <select class="form-control" id="fromLocation">
+                <option value="" disabled selected>Select Departure Port</option>
+                <!-- Options will be dynamically added here -->
+              </select>
+            </div>
 
+            <!-- To Location Dropdown -->
+            <div class="form-group">
+              <label for="toLocation">To</label>
+              <select class="form-control" id="toLocation">
+                <option value="" disabled selected>Select Arrival Port</option>
+                <!-- Options will be dynamically added here -->
+              </select>
+            </div>
 
-    
+            <!-- Price Negotiation Slider -->
+            <div class="slider-container">
+              <label for="priceRange">Negotiation Price (in USD):</label>
+              <input type="range" min="100" max="10000" value="5000" class="slider" id="priceRange">
+              <span class="slider-value" id="sliderValue">$5000</span>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="filterBtn">Apply Filters</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shipping Data Table - Hidden initially -->
+  <div class="row" id="resultsTable">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Shipping Schedule Results</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Exporter</th>
+                <th>Port of Load (POL)</th>
+                <th>Port of Discharge (POD)</th>
+                <th>Vessel ID</th>
+                <th class="text-right">Next Departure</th>
+                <th class="text-right">Action</th>
+              </thead>
+              <tbody id="scheduleBody">
+                <!-- Data will be populated dynamically here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script>
+  const portSchedule = [
+    { "Departure Port": "KAKINADA", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "ENNORE", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "VISAKHAPATNAM", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "COCHIN", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "PARADIP GARH", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "KOLKATA", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "NEW MANGALORE", "Arrival Port": "HAMBURG" },
+    { "Departure Port": "MUNDRA", "Arrival Port": "BREMERHAVEN" },
+    { "Departure Port": "HAZIRA PORT/SURAT", "Arrival Port": "BREMERHAVEN" },
+    { "Departure Port": "NHAVA SHEVA", "Arrival Port": "BREMERHAVEN" },
+    // More data as required...
+  ];
 
+  // Function to initialize dropdowns
+  function initializeDropdowns() {
+    const fromLocation = document.getElementById("fromLocation");
+    const toLocation = document.getElementById("toLocation");
 
+    // Extract unique ports for departure and arrival
+    const fromPorts = [...new Set(portSchedule.map(item => item["Departure Port"]))];
+    const toPorts = [...new Set(portSchedule.map(item => item["Arrival Port"]))];
+
+    // Populate fromLocation dropdown
+    fromPorts.forEach(port => {
+      const option = document.createElement("option");
+      option.value = port;
+      option.text = port;
+      fromLocation.appendChild(option);
+    });
+
+    // Populate toLocation dropdown
+    toPorts.forEach(port => {
+      const option = document.createElement("option");
+      option.value = port;
+      option.text = port;
+      toLocation.appendChild(option);
+    });
+  }
+
+  // Show slider value dynamically
+  var slider = document.getElementById("priceRange");
+  var output = document.getElementById("sliderValue");
+  output.innerHTML = "$" + slider.value;
+
+  slider.oninput = function () {
+    output.innerHTML = "$" + this.value;
+  };
+
+  // Event listener for filter button click
+  document.getElementById("filterBtn").addEventListener("click", function () {
+    const fromPort = document.getElementById("fromLocation").value;
+    const toPort = document.getElementById("toLocation").value;
+
+    if (fromPort && toPort) {
+      // Reveal the results table
+      document.getElementById("resultsTable").style.display = "block";
+      
+      // Filter the results and populate the table here (dummy example)
+      const scheduleBody = document.getElementById("scheduleBody");
+      scheduleBody.innerHTML = `
+        <tr>
+          <td>MSC</td>
+          <td>${fromPort}</td>
+          <td>${toPort}</td>
+          <td>MHC768</td>
+          <td class="text-right">2024-12-15</td>
+          <td class="text-right">
+        <a href="{% url 'chat-page' %}?username={{ request.user.username }}&carrier_name=MSC&transit_time=5%20days&vessel_id=MHC768&departure_date=2024-12-15&pol=${fromPort}&pod=${toPort}" 
+           class="btn btn-warning">
+            Get Quote
+        </a>
+    </td>
+        </tr>
+      `;
+    } else {
+      alert("Please select both From and To ports.");
+    }
+  });
+
+  // Initialize dropdowns on page load
+  document.addEventListener("DOMContentLoaded", initializeDropdowns);
+</script>
 
 
 <script>
@@ -281,4 +364,7 @@ AIzaSyB2bXKNDezDf6YNVc-SauobynNHPo4RJb8&callback=initMap">
 </script> 
 
 
-{% endblock javascripts %}
+  {% endblock javascripts %}
+
+
+  // Initialize dropdowns on page load

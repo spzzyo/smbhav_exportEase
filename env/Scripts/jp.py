@@ -1,4 +1,4 @@
-#!C:\vnn\Hackathon\Smbhv\Prototype\exportEase\env\Scripts\python.exe
+#!C:\Users\YOSHITA\OneDrive\Desktop\smbhv\recentEXportEase\exportEase\env\Scripts\python.exe
 
 import sys
 import json

@@ -1,32 +1,76 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
-<table>
-    <thead>
-        <tr>
-            <th>Exporter</th>
-            <th>Document</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for req in pending_requests %}
-        <tr>
-            <td>{{ req.shipper.username }}</td>
-            <td>{{ req.document.title }}</td>
-            <td>{{ req.status }}</td>
-            <td>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="request_id" value="{{ req.id }}">
-                    <button name="action" value="verify">Verify Forgery</button>
-                    <button name="action" value="approve">Approve</button>
-                    <button name="action" value="reject">Reject</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+<div class="panel-header panel-header-sm"></div>
+<section style="text-align: center; margin: 20px auto;">
+    <a href="{% url 'user:process_forgery_checks' %}" 
+       class="btn btn-primary" 
+       id="forgery-checks-button" 
+       style="padding: 10px 20px; font-size: 16px;">
+       Run Forgery Checks
+    </a>
+    <div id="loader" style="display: none; margin: 20px auto;">
+        <img src="/static/images/loader.gif" alt="Loading..." width="50">
+    </div>
+</section>
+
+<section style="text-align: center; margin: 20px auto;">
+    <h2>Pending Requests</h2>
+    {% if pending_requests %}
+        <div style="overflow-x: auto; margin: 0 auto; width: 80%;">
+            <table style="border-collapse: collapse; width: 100%; margin: 20px auto;">
+                <thead>
+                    <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ccc;">
+                        <th style="padding: 10px;">Request ID</th>
+                        <th style="padding: 10px;">Document Title</th>
+                        <th style="padding: 10px;">Actor</th>
+                        <th style="padding: 10px;">Status</th>
+                        <th style="padding: 10px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in pending_requests %}
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px;">{{ req.id }}</td>
+                            <td style="padding: 10px;">{{ req.document.title }}</td>
+                            <td style="padding: 10px;">{{ req.shipper.username }}</td>
+                            <td style="padding: 10px;">{{ req.status }}</td>
+                            <td style="padding: 10px;">
+                                <!-- Approve Button -->
+                                <form method="post" action="{% url 'user:admin-dashboard' %}" style="display: inline-block;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="request_id" value="{{ req.id }}">
+                                    <input type="hidden" name="action" value="approve">
+                                    <button type="submit" class="btn btn-success" style="margin-right: 5px;">Approve</button>
+                                </form>
+
+                                <!-- Reject Button -->
+                                <form method="post" action="{% url 'user:admin-dashboard' %}" style="display: inline-block;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="request_id" value="{{ req.id }}">
+                                    <input type="hidden" name="action" value="reject">
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p style="font-size: 16px; color: #888;">No pending requests at the moment.</p>
+    {% endif %}
+</section>
+{% endblock content %}
+
+<script>
+    document.getElementById('forgery-checks-button').addEventListener('click', function (e) {
+        e.preventDefault();
+        const loader = document.getElementById('loader');
+        loader.style.display = 'block'; // Show loader
+        setTimeout(() => {
+            loader.style.display = 'none'; // Hide loader after 2 seconds
+            window.location.href = this.href; // Redirect to the URL
+        }, 2000);
+    });
+</script>

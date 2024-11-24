@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls, name="admin_page"),
     path("", include("user.urls")),
     path("", include("chatPortal.urls")),
@@ -25,4 +26,7 @@ urlpatterns = [
     path("", include('doc_manager.urls')),
     path("", include('mlModel.urls')),
     path("notifications/",include("notification.urls")),
+    path("", include('doc_generator.urls')),
+
 ]
+

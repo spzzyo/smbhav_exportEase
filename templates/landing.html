@@ -1,0 +1,500 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PGC-GYM Landing Page</title>
+    <!-- CSS -->
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;500;700&display=swap");
+/* Base */
+:root {
+  --clr-primary: hsl(36, 100%, 50%); /* Amazon's signature orange */
+  --amazon-black: hsl(0, 0%, 13%); /* Dark black for text */
+  --amazon-gray-dark: hsl(0, 0%, 30%); /* Dark gray for background and borders */
+  --amazon-gray-light: hsl(0, 0%, 80%); /* Light gray for backgrounds and subtle elements */
+  --amazon-yellow: hsl(44, 100%, 50%); /* Vibrant yellow for accents */
+  --amazon-light-orange: hsl(36, 100%, 70%); /* Lighter shade of orange for buttons */
+  --amazon-white: hsl(0, 0%, 100%); /* White for background and text */
+  --amazon-blue: hsl(207, 91%, 24%); /* Deep blue for accent */
+  --amazon-light-gray: hsl(0, 0%, 95%); /* Light gray for borders, backgrounds, etc. */
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--amazon-white); /* Changed background to white */
+  color: var(--amazon-black); /* Text color set to Amazon's black */
+  overflow-x: hidden;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header,
+.section {
+  width: 100%;
+  padding: 40px 0;
+  overflow: hidden;
+}
+
+.header::after,
+.header::before,
+.section::after,
+.section::before {
+  content: "";
+   /* Set background to white for decoration */
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: 0;
+}
+
+.header::after {
+  left: -200px;
+}
+
+.header::before {
+  right: -200px;
+}
+
+.mb {
+  margin-bottom: 30px;
+}
+
+.mt {
+  margin-top: 20px;
+}
+
+.section {
+  background: var(--amazon-gray-dark); /* Dark gray background for sections */
+  position: relative;
+  padding: 80px 0;
+}
+
+.section::after {
+  left: -200px;
+}
+
+.section::before {
+  width: 600px;
+  right: -200px;
+}
+
+.section:nth-child(even) {
+  background: var(--amazon-gray-light); /* Light gray for even sections */
+}
+
+.section:nth-child(even)::after,
+.section:nth-child(even)::before {
+  display: none;
+}
+
+.primary {
+  font-size: 35px;
+  font-weight: 700;
+}
+
+.secondary {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.tertiary {
+  font-size: 15px;
+}
+/* End Base */
+
+/* Menu */
+.menu {
+  width: 100%;
+  background: linear-gradient(to right, var(--amazon-blue) 70%, var(--amazon-black));
+  padding: 12px 0;
+}
+
+.menu .container {
+  justify-content: space-between;
+}
+
+.mobile-btn {
+  display: none;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.logo img {
+  width: 80px;
+  height: auto;
+}
+
+.nav {
+  list-style: none;
+}
+
+.nav-item {
+  display: inline-block;
+  margin-right: 30px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: var(--amazon-white);
+}
+
+.nav-item:hover a {
+  color: var(--amazon-yellow);
+  transition: 0.3s linear;
+}
+
+.nav-item:last-of-type {
+  margin-right: 0;
+}
+/* End Menu */
+
+/* Buttons */
+.btn {
+  padding: 10px 28px;
+  background: var(--clr-primary);
+  border-radius: 40px;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--amazon-white);
+  display: inline-block;
+}
+
+.btn:hover {
+  background: var(--amazon-light-orange);
+  transition: 0.3s linear;
+}
+
+.btn-2 {
+  font-size: 35px;
+  text-decoration: none;
+  color: var(--amazon-gray-light);
+  transition: 0.3s linear;
+}
+
+.btn-2:hover {
+  color: var(--clr-primary);
+}
+/* End Buttons */
+
+/* Header */
+.text {
+  width: 60%;
+}
+
+.visual {
+  width: 40%;
+}
+
+.visual img {
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 70px;
+  font-weight: 700;
+}
+
+.header h1 span {
+  color: var(--clr-primary);
+}
+/* End Header */
+
+.section:nth-child(even) .visual {
+  margin-right: 30px;
+}
+
+/* Trainer */
+#trainer {
+  text-align: center;
+}
+
+.trainer img {
+  border-top-left-radius: 80px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 80px;
+  border-bottom-left-radius: 20px;
+  margin-bottom: 10px;
+  outline: 2px solid var(--amazon-white);
+  padding: 14px;
+}
+
+.trainer .mb {
+  margin-bottom: 10px;
+}
+/* End Trainer */
+
+/* Testimonial */
+#testimonial .visual img {
+  width: 90%;
+  display: block;
+  margin-left: auto;
+}
+
+.client {
+  background: var(--amazon-white);
+  color: var(--amazon-black);
+  padding: 20px 10px;
+  margin-right: 20px;
+  text-align: center;
+  border-radius: 20px;
+  position: relative;
+  margin-top: 20px;
+}
+
+.client img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  top: -40px;
+  left: calc(50% - 40px);
+}
+
+.client h2 {
+  margin: 20px 0 10px 0;
+}
+/* End Testimonial */
+
+/* Discount */
+#discount {
+  padding: 40px 0;
+}
+/* End  Discount */
+
+/* Footer */
+.footer {
+  padding: 30px 0;
+  border-top: 1px solid var(--amazon-white);
+  text-align: center;
+}
+/* End Footer */
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .mobile-btn {
+    display: block;
+    font-size: 35px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 12px;
+  }
+
+  .menu.active .nav-item {
+    display: block;
+    margin: 30px 0;
+  }
+
+  .nav,
+  .menu .btn {
+    display: none;
+  }
+
+  .menu.active .nav,
+  .menu.active .btn {
+    display: block;
+  }
+
+  .menu.active {
+    padding: 30px 0;
+    width: 100%;
+    transition: all 0.8s ease;
+  }
+
+  .text,
+  .visual {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .text h1 {
+    font-size: 45px;
+  }
+
+  .primary {
+    font-size: 28px;
+  }
+
+  .secondary {
+    font-size: 22px;
+  }
+
+  .tertiary {
+    font-size: 14px;
+  }
+
+  .trainer {
+    margin-bottom: 20px;
+  }
+
+  .client {
+    margin-bottom: 50px;
+  }
+
+  #discount .visual img {
+    width: 70%;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 530px) {
+  .header::after,
+  .header::before,
+  .section::after,
+  .section::before {
+    display: none;
+  }
+
+  .primary {
+    font-size: 25px;
+  }
+
+  .secondary {
+    font-size: 20px;
+  }
+
+  .tertiary {
+    font-size: 12px;
+  }
+
+  .text h1 {
+    font-size: 34px;
+  }
+
+  .btn,
+  .btn-2 {
+    font-size: 16px;
+  }
+}
+
+/* End Responsive */
+
+.youtube {
+  position: fixed;
+  bottom: 40px;
+  right: 70px;
+  text-decoration: none;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 6px;
+  box-shadow: 0 2px 2px 3px rgba(0, 0, 0, 0.2);
+  color: var(--amazon-white);
+}
+
+.youtube p {
+  font-size: 22px;
+}
+    </style>
+  </head>
+  <body>
+    <!-- Menu -->
+    <div class="menu">
+      <div class="container flex">
+        <!-- Mobile Button -->
+        <div class="mobile-btn">
+          <ion-icon name="grid"></ion-icon>
+        </div>
+        <div class="logo">
+          <img
+            src="{% static 'assets/img/logo.png' %}"
+            alt="hi"
+          />
+        </div>
+
+        <ul class="nav">
+          <li class="nav-item"><a href="#">Home</a></li>
+          <li class="nav-item"><a href="#why-us">Features</a></li>
+          <li class="nav-item"><a href="#explore">Explore</a></li>
+          <li class="nav-item"><a href="#discount">Register</a></li>
+        </ul>
+
+        <a href="#" class="btn">Register</a>
+      </div>
+    </div>
+    <!-- End Menu -->
+
+    <!-- Header -->
+    <header class="header">
+      <div class="container flex">
+        <div class="visual">
+          <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+        </div>
+        <div class="text">
+          <h1 class="mb">
+          
+            <span>SMB Shipping</span> Simplified for Growth
+          </h1>
+
+          
+
+          <a href="{% url 'user:login' %}" class="btn mt">Get Started Now</a>
+        </div>
+
+        
+      </div>
+    </header>
+    <!-- End Header -->
+
+
+
+ 
+
+   
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
+    ></script>
+    <!-- JS -->
+    <script>
+        //Js
+document.querySelector(".mobile-btn").addEventListener("click", function () {
+  document.querySelector(".menu").classList.toggle("active");
+});
+    </script>
+  </body>
+</html>

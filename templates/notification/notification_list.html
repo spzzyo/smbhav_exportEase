@@ -1,15 +1,64 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-<h1>Notifications</h1>
-<ul>
-    {% for notification in notifications %}
-    <li>
-        {{ notification.message }} 
-        {% if not notification.is_read %}
-        <strong>(New)</strong>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+<div class="panel-header panel-header-sm"></div>
+
+<div class="container mt-5">
+    <!-- Card Container -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <!-- Heading with Background Color -->
+            <h2 class="text-center">
+                Notifications
+            </h2>
+        </div>
+        <div class="card-body p-4">
+            <!-- Notifications Table -->
+            <table class="table table-hover table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 50%;">Message</th>
+                        <th style="width: 10%;">Urgency</th> <!-- Urgency Column -->
+                        <th style="width: 15%;">Status</th> <!-- Status Column -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamically Added Notifications -->
+                    {% for notification in notifications %}
+                    <tr class="table-danger"> <!-- Always mark dynamically added notifications as urgent -->
+                        <td>{{ forloop.counter }}</td> <!-- Row Number -->
+                        <td>{{ notification.message }}</td> <!-- Notification Message -->
+                        <td>
+                            <span class="badge badge-danger">Urgent</span> <!-- Always "Urgent" -->
+                        </td> <!-- Urgency -->
+                        <td>
+                            {% if not notification.is_read %}
+                                <span class="badge badge-success">New</span>
+                            {% else %}
+                                <span class="badge badge-secondary">Read</span>
+                            {% endif %}
+                        </td> <!-- Status -->
+                    </tr>
+                    {% endfor %}
+                    
+                    <!-- Hardcoded Notifications (Normal, as per your original code) -->
+                    <tr class="table-info">
+                        <td>2</td> <!-- Row Number -->
+                        <td>Hey</td> <!-- Notification Message -->
+                        <td><span class="badge badge-info">Normal</span></td> <!-- Urgency -->
+                        <td><span class="badge badge-success">New</span></td> <!-- Status -->
+                    </tr>
+                    <tr class="table-info">
+                        <td>3</td>
+                        <td>Hello</td>
+                        <td><span class="badge badge-info">Normal</span></td>
+                        <td><span class="badge badge-success">New</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

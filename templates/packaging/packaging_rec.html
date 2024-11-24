@@ -1,0 +1,314 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Packaging Recommendation{% endblock %}
+
+{% block stylesheets %}
+<style>
+  .packaging-section {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .packaging-form {
+    margin-top: 20px;
+  }
+
+  .recommendation-results {
+    display: block; /* Always show the recommendations */
+  }
+
+  .recommendation-list-container {
+    width: 45%;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .recommendation-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .recommendation-list li {
+    padding: 5px 0;
+  }
+
+  .normal-recommendation {
+    background-color: #e1e1e1;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .sustainable-recommendation {
+    background-color: #3fab59; /* Green background for sustainability */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .recommendation-section {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #resultsTable {
+    margin-top: 20px;
+  }
+
+  .slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .slider {
+    width: 80%;
+  }
+
+  .slider-value {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  #recommendations {
+    margin-top: 20px;
+  }
+
+  .image-preview {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .image-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 300px;
+  }
+
+  .image-upload-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  #imagePreviewSection {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+  }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="panel-header panel-header-sm"></div>
+<div class="content">
+  <div class="packaging-section">
+    <h2>Packaging Recommendation System</h2>
+
+    <div class="card packaging-form">
+      <div class="card-header">
+        <h4 class="card-title">Enter Shipment Details</h4>
+      </div>
+      <div class="card-body">
+        <form id="packagingForm">
+          <!-- Weight Input -->
+          <div class="form-group">
+            <label for="weight">Weight (in kg):</label>
+            <input type="number" class="form-control" id="weight" min="0.1" step="0.1" placeholder="Enter weight" required>
+          </div>
+
+          <!-- Dimensions Input -->
+          <div class="form-group">
+            <label for="dimensions">Dimensions (in cm):</label>
+            <input type="text" class="form-control" id="dimensions" placeholder="Enter dimensions (L x W x H)" required>
+          </div>
+
+          <!-- Goods Type Dropdown -->
+          <div class="form-group">
+            <label for="goodsType">Goods Type:</label>
+            <select class="form-control" id="goodsType" required>
+              <option value="" disabled selected>Select goods type</option>
+              <option value="fragile">Fragile</option>
+              <option value="non-fragile">Non-Fragile</option>
+              <option value="liquid">Liquid</option>
+              <option value="solid">Solid</option>
+              <option value="perishable">Perishable</option>
+              <option value="electronic">Electronic</option>
+            </select>
+          </div>
+
+          <!-- Image Upload Section -->
+          <div class="image-upload-container">
+            <label for="imageUpload">Upload Image:</label>
+            <input type="file" class="form-control" id="imageUpload" accept="image/*">
+          </div>
+
+          <button type="button" class="btn btn-primary" id="recommendBtn">Get Recommendations</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Image Preview Section -->
+    <div id="imagePreviewSection">
+      <h4>Uploaded Image:</h4>
+      <div class="image-preview">
+        <img id="uploadedImage" src="" alt="Uploaded Image" />
+      </div>
+    </div>
+
+    <!-- Recommendation Results Section -->
+    <div class="recommendation-results" id="recommendations">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Recommended Packaging Options</h4>
+        </div>
+        <div class="card-body">
+          <!-- Display both Normal and Sustainable Recommendations Side by Side -->
+          <div class="recommendation-section">
+            <!-- Normal Recommendations -->
+            <div class="recommendation-list-container">
+              <h5>Normal</h5>
+              <ul id="normalRecommendationList" class="recommendation-list normal-recommendation">
+                <!-- Normal recommendations will be populated here dynamically -->
+              </ul>
+            </div>
+
+            <!-- Sustainable Recommendations -->
+            <div class="recommendation-list-container">
+              <h5>Sustainable Alternatives</h5>
+              <ul id="sustainableRecommendationList" class="recommendation-list sustainable-recommendation">
+                <!-- Sustainable recommendations will be populated here dynamically -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+  // Function to calculate normal and sustainable packaging based on user input
+  function getPackagingRecommendations(weight, dimensions, goodsType) {
+    const recommendations = {
+      normal: [],
+      sustainable: []
+    };
+
+    // Normal Recommendation (Standard Packaging)
+    let normalRecommendation = [];
+    if (weight < 5) {
+      normalRecommendation.push("Use Bubble Wrap or Foam Wrap for cushioning.");
+      normalRecommendation.push("Place the product in sturdy cardboard boxes.");
+    } else if (weight >= 5 && weight < 20) {
+      normalRecommendation.push("Use Molded Pulp for protection.");
+      normalRecommendation.push("Sturdy cardboard boxes with edge protection.");
+    } else {
+      normalRecommendation.push("Use wooden crates for packaging.");
+      normalRecommendation.push("Ensure additional padding with foam sheets.");
+    }
+
+    // Sustainable Recommendation (Eco-Friendly Packaging)
+    let sustainableRecommendation = [];
+    if (weight < 5) {
+      sustainableRecommendation.push("Use recycled cardboard boxes.");
+      sustainableRecommendation.push("Consider using biodegradable packing peanuts.");
+    } else if (weight >= 5 && weight < 20) {
+      sustainableRecommendation.push("Use recycled molded pulp for protection.");
+      sustainableRecommendation.push("Consider using paper-based edge protectors.");
+    } else {
+      sustainableRecommendation.push("Use reusable wooden crates made from sustainable wood.");
+      sustainableRecommendation.push("Use eco-friendly foam sheets made from biodegradable materials.");
+    }
+
+    // Add goods type-based sustainability options
+    switch (goodsType) {
+      case "fragile":
+        normalRecommendation.push("Use Fragile stickers and Air Pillow Cases.");
+        sustainableRecommendation.push("Use eco-friendly fragile stickers made from recycled materials.");
+        break;
+      case "liquid":
+        normalRecommendation.push("Use waterproof inner packaging (sealed plastic bags).");
+        sustainableRecommendation.push("Consider biodegradable sealed bags for liquids.");
+        break;
+      case "perishable":
+        normalRecommendation.push("Use insulated packaging to maintain temperature.");
+        sustainableRecommendation.push("Use plant-based insulated materials for temperature control.");
+        break;
+      case "electronic":
+        normalRecommendation.push("Use anti-static wraps for electronic goods.");
+        sustainableRecommendation.push("Use anti-static wraps made from recycled materials.");
+        break;
+      case "non-fragile":
+        normalRecommendation.push("Standard corrugated boxes will be sufficient.");
+        sustainableRecommendation.push("Consider using recycled corrugated boxes for non-fragile goods.");
+        break;
+      default:
+        normalRecommendation.push("Please provide further details for a more accurate recommendation.");
+        sustainableRecommendation.push("Please provide further details for a more accurate recommendation.");
+        break;
+    }
+
+    recommendations.normal = normalRecommendation;
+    recommendations.sustainable = sustainableRecommendation;
+
+    return recommendations;
+  }
+
+  // Event listener for recommendation button click
+  document.getElementById('recommendBtn').addEventListener('click', function () {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const dimensions = document.getElementById('dimensions').value;
+    const goodsType = document.getElementById('goodsType').value;
+
+    if (weight && dimensions && goodsType) {
+      const recommendations = getPackagingRecommendations(weight, dimensions, goodsType);
+
+      // Function to populate recommendations in the list
+      function populateRecommendations(recommendations, type) {
+        const recommendationList = document.getElementById(type === 'normal' ? 'normalRecommendationList' : 'sustainableRecommendationList');
+        recommendationList.innerHTML = '';
+        recommendations.forEach(item => {
+          const listItem = document.createElement('li');
+          listItem.textContent = item;
+          recommendationList.appendChild(listItem);
+        });
+      }
+
+      // Display both recommendation lists side by side
+      document.getElementById('recommendations').style.display = 'block';
+      populateRecommendations(recommendations.normal, 'normal');
+      populateRecommendations(recommendations.sustainable, 'sustainable');
+    } else {
+      alert("Please fill in all fields.");
+    }
+  });
+
+  // Handle image upload and display the image
+  document.getElementById('imageUpload').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const image = document.getElementById('uploadedImage');
+        image.src = e.target.result;
+        document.getElementById('imagePreviewSection').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please upload a valid image.");
+    }
+  });
+</script>
+{% endblock javascripts %}

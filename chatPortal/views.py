@@ -9,6 +9,14 @@ from twilio.rest import Client
 from django.http import JsonResponse
 
 
+def packreco(request):
+    return render(request, "packaging/packaging_rec.html")
+
+def landing(request):
+    return render(request, "landing.html")
+
+def shiptrack(request):
+    return render(request,"user/shipment_tracking.html")
 
 def chatPage(request, *args, **kwargs):
     if not request.user.is_authenticated:
@@ -64,7 +72,7 @@ def get_messages_and_summarize():
 
     try:
         
-        messages = Messages.objects.filter(roomId="saket_MSC").order_by('timestamp').values('username', 'message')
+        messages = Messages.objects.filter(roomId="exporter_MSC").order_by('timestamp').values('username', 'message')
         if not messages.exists():
             return "No messages found in the chat room."
 
@@ -116,3 +124,28 @@ def get_messages_and_summarize():
 
   
     return summary
+
+def make_protected_call(request):
+    if request.method == "POST":
+        try:
+            # Twilio credentials
+            account_sid = "AC53ccbc7b90c6e3e019895efadc19e6d3"
+            auth_token = "6c62feb76465fe2ae69713867dfaa2e9"
+            client = Client(account_sid, auth_token)
+
+            # Create the call
+            call = client.calls.create(
+                method="GET",
+                status_callback_method="POST",
+                url="http://demo.twilio.com/docs/voice.xml",
+                to="+919833914068", 
+                from_="+12406604030",
+            )
+
+            # Respond with success and call SID
+            return JsonResponse({"status": "success", "call_sid": call.sid})
+
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)})
+
+    return JsonResponse({"status": "error", "message": "Invalid request method"})

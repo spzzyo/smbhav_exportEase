@@ -2,7 +2,9 @@
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
         <div class="container-fluid">
           <div class="navbar-wrapper">
+             <h3>Welcome {{ request.user.username }}</h3>
             <div class="navbar-toggle">
+
               <button type="button" class="navbar-toggler">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
@@ -21,6 +23,7 @@
             {% if request.user.is_authenticated %}
             <form>
               <div class="input-group no-border">
+                
                 <input type="text" value="" class="form-control" placeholder="Search...">
                 <div class="input-group-append">
                   <div class="input-group-text">
@@ -30,6 +33,7 @@
               </div>
             </form>
             <ul class="navbar-nav">
+             
               <li class="nav-item">
                 <a class="nav-link" href="#pablo">
                   <i class="now-ui-icons media-2_sound-wave"></i>

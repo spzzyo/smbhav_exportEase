@@ -1,8 +1,294 @@
 {% extends "layouts/base.html" %}
 
-{% block content %}
-<h1>Welcome {{ request.user.username }}</h1>
+{% load static %}
 
-<a href="{% url 'category:category' %}">Export Now</a>
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+.equal-size-image {
+    width: 100%; /* Ensures images take full width of the container */
+    height: 200px; /* Set a fixed height for uniformity */
+    object-fit: cover; /* Ensures that the image fills the container without distorting */
+}
+
+.clickable-image {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clickable-image:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    cursor: pointer; /* Change cursor to pointer */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="panel-header panel-header-sm">
+  
+
+       
+
+</div>
+<div class="content">
+   
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h4 class="card-title">Global Shipment Analytics</h4>
+                </div>
+
+                <div class="card-body text-center">
+                    <a href="https://ys5p0lh0wf8tb4h.in.qlikcloud.com/single/?appid=64bae305-6a42-4af1-8ac2-997bc1079561&sheet=ebTWU&theme=horizon&opt=ctxmenu,currsel&identity=preview_krAxxhk">
+                        <img src="{% static 'assets/img/dashboard.png' %}" alt="Global Shipment" class="img-fluid clickable-image equal-size-image">
+                    </a>
+                </div>
+
+               
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h4 class="card-title">Start A New Shipment</h4>
+                    <div class="dropdown">
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <a href="{% url 'predict_view' %}">
+                        <img src="{% static 'assets/img/yellowship.jpg' %}" alt="Global Shipment" class="img-fluid clickable-image equal-size-image">
+                    </a>
+                </div>
+               
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h4 class="card-title">AI Document Assisstant</h4>
+                </div>
+
+                <div class="card-body text-center">
+                    <a href="{% url 'doc_page' %}">
+                        <img src="{% static 'assets/img/docBuddyAI.webp' %}" alt="Global Shipment" class="img-fluid clickable-image equal-size-image">
+                    </a>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-tasks">
+                <div class="card-header ">
+                    <h4 class="card-title">Latest Insights on Exports from India</h4>
+                    <span>Insights focusing on Small and Medium Businesses (SMBs)</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-full-width table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <!-- Add relevant data for insights -->
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">Impact of Digital Transformation on Indian SMB Exports
+                                        <br><a href="https://www.smetimes.in/smetimes/news/top-stories/2023/Dec/04/india-exporters-are-increasingly-embracing-digital-transformation.html" target="_blank">Source: SME Times</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox">
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">Top Export Markets for SMBs in India
+                                        <br><a href="https://www.ibef.org/exports/exports-from-india" target="_blank">Source: IBEF</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">Government Initiatives Supporting SMB Export Growth
+                                        <br><a href="https://www.makeinindia.com" target="_blank">Source: Make in India</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox">
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">Challenges Faced by SMBs in Exporting Goods
+                                        <br><a href="https://www.businesstoday.in/latest/in-focus/story/the-challenges-and-opportunities-for-indias-smbs-in-global-export-297701-2023-10-18" target="_blank">Source: Business Today</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">SMBs in India Leveraging E-commerce for Exporting
+                                        <br><a href="https://economictimes.indiatimes.com/small-biz/startups/newsbuzz/how-indian-smbs-are-using-e-commerce-to-expand-exports/articleshow/10423872.cms" target="_blank">Source: Economic Times</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox">
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">India's Role in Global Supply Chains: The SMB Perspective
+                                        <br><a href="https://www.thehindu.com/business/industry/how-indian-smbs-are-navigating-global-supply-chains/article34471151.ece" target="_blank">Source: The Hindu</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">Financing Options for SMBs to Boost Export Competitiveness
+                                        <br><a href="https://www.microsmallenterprises.org/financing-options-for-exporting-smbs-in-india/" target="_blank">Source: Micro Small Enterprises</a>
+                                    </td>
+                                    <td class="td-actions text-right"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-category">Export Statistics</h5>
+                    <h4 class="card-title">Exports Stats for India</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th>Export Category</th>
+                                <th>Region</th>
+                                <th>Value (in USD)</th>
+                                <th class="text-right">Growth (%)</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Electronics</td>
+                                    <td>Global</td>
+                                    <td class="text-right">$12.5 Billion</td>
+                                    <td class="text-right">+5.4%</td>
+                                </tr>
+                                <tr>
+                                    <td>Textiles</td>
+                                    <td>Europe</td>
+                                    <td class="text-right">$9.8 Billion</td>
+                                    <td class="text-right">+3.2%</td>
+                                </tr>
+                                <tr>
+                                    <td>Agriculture Products</td>
+                                    <td>Middle East</td>
+                                    <td class="text-right">$7.1 Billion</td>
+                                    <td class="text-right">+7.9%</td>
+                                </tr>
+                                <tr>
+                                    <td>Automobiles</td>
+                                    <td>USA</td>
+                                    <td class="text-right">$10.3 Billion</td>
+                                    <td class="text-right">+4.5%</td>
+                                </tr>
+                                <tr>
+                                    <td>Pharmaceuticals</td>
+                                    <td>Africa</td>
+                                    <td class="text-right">$5.2 Billion</td>
+                                    <td class="text-right">+2.6%</td>
+                                </tr>
+                                <tr>
+                                    <td>Iron & Steel</td>
+                                    <td>Asia</td>
+                                    <td class="text-right">$4.9 Billion</td>
+                                    <td class="text-right">+6.1%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    </div>
 
 {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script src="/static/assets/js/plugins/chartjs.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+    });
+  </script>
+
+{% endblock javascripts %}
+
+
+
+
+

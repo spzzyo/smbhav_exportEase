@@ -5,7 +5,8 @@ from tensorflow.keras.models import load_model
 import numpy as np
 
 
-model = load_model("C:/vnn/Hackathon/Smbhv/Prototype/exportEase/mlModel/classification_model.h5")
+model = load_model("C:/Users/YOSHITA/OneDrive/Desktop/smbhv/recentEXportEase/exportEase/mlModel/classification_model.h5")
+
 
 
 def predict(image_path):

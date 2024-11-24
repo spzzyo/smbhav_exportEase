@@ -34,9 +34,9 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, "user/register.html", {"form": form})
 
-@login_required
-def admin_dashboard(request):
-    return render(request, "user/admin_dashboard.html")
+# @login_required
+# def admin_dashboard(request):
+#     return render(request, "user/admin_dashboard.html")
 
 @login_required
 def exporter_dashboard(request):
@@ -50,3 +50,6 @@ def shipper_dashboard(request):
 def actor_dashboard(request):
     return render(request, "user/actor_dashboard.html")
 
+@login_required
+def shipment_tracking(request):
+    return render(request, "user/shipment_tracking.html")
