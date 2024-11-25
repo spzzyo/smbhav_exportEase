@@ -21,4 +21,8 @@
   python manage.py runserver
   ```
 # Demo Link Youtube
-## https://youtu.be/aIyQUQiLWLc 
+#### https://youtu.be/aIyQUQiLWLc 
+
+## Deployed Link
+#### http://51.20.123.230:8000/
+
