@@ -1,16 +1,14 @@
 {
-   
-    "builds": [
+  "builds": [{
+      "src": "exportEase/wsgi.py",
+      "use": "@ardnt/vercel-python-wsgi",
+      "config": { "maxLambdaSize": "15mb" }
+  }],
+  "routes": [
       {
-        "src": "exportEase/wsgi.py",
-        "use": "@vercel/python"
-        
+          "src": "/(.*)",
+          "dest": "exportEase/wsgi.py"
       }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "exportEase/wsgi.py"
-      }
-    ]
-  }
+  ],
+  "ignoreCommand": "git check-ignore -q **/*"
+}

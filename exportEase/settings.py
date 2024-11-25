@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-7=^168^kr_)4+%x0c++)!ml%@3s8u+!bp8-(nrg8renr@@ad1c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'chatPortal',
     'doc_manager',
     'mlModel',
-
+    'doc_generator',
  
 ]
 
@@ -74,10 +74,7 @@ CHANNEL_LAYERS = {
 }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-    }
+   
 }
 
 TEMPLATE_DIR = os.path.join(CORE_DIR, "templates")  # ROOT dir for templates
