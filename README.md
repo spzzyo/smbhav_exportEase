@@ -3,7 +3,7 @@ In the world of cross border trades which is full of frauds complexities, especi
 Our Solution:
 Introducing ExportEase a platform which provides an end-to-end solution designed to streamline and secure the entire cross-border export communication process between carriers, sellers, and other actors involved in trade. Alongside our solution aims to solve redundant work by leveraging the power of generative AI to generate country specific documents.
 
-
+## USP
 USP1 : Smart Negotiation Channel
 Facilitates efficient and structured communication with Protected Calls and Intelligent NLP-based Chat features for seamless collaboration.
 USP2: Doc Buddy - Generative AI Integration
