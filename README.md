@@ -1,15 +1,22 @@
 # Run Project Commands
 
-```bash
-# Clone the repository
-git clone https://github.com/spzzyo/smbhav_exportEase/
+  ```bash
+  # Clone the repository
+  git clone https://github.com/spzzyo/smbhav_exportEase/
+  ```
 
-python -m venv env
-
-env/Scripts/activate
-
-cd exportEase
-
-pip install -r requirements.txt
-
-python manage.py runserver
+  ```bash
+  python -m venv env
+  ```
+  ```bash
+  env/Scripts/activate
+  ```
+  ```bash
+  cd exportEase
+  ```
+  ```bash
+  pip install -r requirements.txt
+  ```
+  ```bash
+  python manage.py runserver
+  ```
